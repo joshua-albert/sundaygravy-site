@@ -30,7 +30,7 @@ PHOTOS = [
     ("layer-cakes-bakery-photography-philadelphia", "Three layer cakes on a mosaic patio table"),
 ]
 
-WIDTHS = (600, 1200, 1800)
+WIDTHS = (600, 900, 1200, 1800)
 ROOT = Path(__file__).resolve().parent.parent / "photos"
 
 

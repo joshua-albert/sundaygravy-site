@@ -93,12 +93,12 @@ def srcset(slug):
     return ", ".join(f"/photos/{slug}-{w}.webp {w}w" for w in ws), ws
 
 
-def photo(slug, sizes="100vw", cls="", eager=False, alt=None):
+def photo(slug, sizes="100vw", cls="", eager=False, alt=None, lazy=True):
     w, h = jpeg_size(ROOT / "photos" / f"{slug}.jpg")
     ss, ws = srcset(slug)
     mid = [x for x in ws if x <= 1200][-1]
     alt = ALT[slug] if alt is None else alt
-    load = 'fetchpriority="high"' if eager else 'loading="lazy" decoding="async"'
+    load = 'fetchpriority="high"' if eager else ('loading="lazy" decoding="async"' if lazy else 'decoding="async"')
     c = f' class="{cls}"' if cls else ""
     return (f'<img{c} src="/photos/{slug}-{mid}.webp" srcset="{ss}" sizes="{sizes}" '
             f'width="{w}" height="{h}" alt="{html.escape(alt)}" {load}>')
@@ -153,7 +153,7 @@ def grid_html():
         tiles.append(
             f'<button class="tile" type="button" data-i="{i}" data-full="/photos/{slug}-1800.webp" '
             f'aria-label="Open photo: {html.escape(alt)}">'
-            + photo(slug, "(max-width: 760px) 50vw, 400px", eager=i < 3) + "</button>")
+            + photo(slug, "(max-width: 760px) 50vw, 400px", eager=i < 3, lazy=i >= 12) + "</button>")
     return f'<div class="grid" id="grid">{"".join(tiles)}</div>'
 
 
