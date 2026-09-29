@@ -76,7 +76,7 @@ Use the Cowdog SEO work as the model (see ~/cowdogwebsite/cowdog-main and the Co
 
 ## 6. Contact form + email (needed for the site to actually get leads)
 - Wire the contact form the same way the Cowdog /contact/ form is wired (check that repo), with a honeypot. Tell him where submissions will land.
-- hello@sundaygravystudio.com doesn't exist yet. Recommend the simplest option (GoDaddy email forwarding to his Gmail, or a Google Workspace alias) and add it to his checklist. Until it exists, don't show the address as if it works.
+- hello@sundaygravystudio.com will forward to joshua@cowdog.studio (Claude in Cowork is setting this up in GoDaddy/Google Workspace on Sep 29 2026). Show hello@sundaygravystudio.com on the site as the contact email. Form submissions should also land at joshua@cowdog.studio.
 
 ## Cowdog lessons to carry over
 - Meta descriptions under 160 characters.
