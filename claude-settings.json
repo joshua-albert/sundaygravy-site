@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "defaultMode": "acceptEdits",
+    "allow": [
+      "Edit", "Write", "Read", "Glob", "Grep", "WebFetch", "WebSearch",
+      "Bash(git:*)", "Bash(gh:*)", "Bash(python3:*)", "Bash(pip3:*)", "Bash(npx:*)", "Bash(npm:*)", "Bash(node:*)",
+      "Bash(ls:*)", "Bash(mkdir:*)", "Bash(cp:*)", "Bash(mv:*)", "Bash(cat:*)", "Bash(open:*)",
+      "Bash(sips:*)", "Bash(curl:*)", "Bash(dig:*)", "Bash(nslookup:*)", "Bash(whois:*)", "Bash(brew:*)"
+    ],
+    "deny": [
+      "Bash(git push --force:*)", "Bash(git push -f:*)", "Bash(rm -rf:*)"
+    ]
+  }
+}

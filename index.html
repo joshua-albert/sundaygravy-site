@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Sunday Gravy Studio | Food Photography in Philadelphia</title>
+<meta name="description" content="Food and drink photography for restaurants, bars, bakeries and cafés in Philadelphia. Menu shoots, dish drops and monthly content. Based in South Philly.">
+<link rel="canonical" href="https://www.sundaygravystudio.com/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="Sunday Gravy Studio">
+<meta property="og:description" content="Food and drink photography for Philadelphia restaurants, bars, bakeries and cafés.">
+<meta property="og:image" content="https://www.sundaygravystudio.com/photos/sg-01.jpg">
+<meta property="og:url" content="https://www.sundaygravystudio.com/">
+<meta name="theme-color" content="#F8E7A4">
+<style>*,*::before,*::after{box-sizing:border-box}html{-webkit-text-size-adjust:100%}body{margin:0}img{max-width:100%}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Inter+Tight:wght@400;500&display=swap">
+<style>
+  :root{
+    color-scheme:light;
+    --paper:#F8E7A4;--ink:#1A1918;--muted:#6B5E43;--line:#E3CF86;--field:#FBEFC0;--gravy:#D52B1E;--red:#D52B1E;--stroke:#D52B1E;--card:#F8E7A4;--marker:"Caveat Brush","Marker Felt",cursive;
+    --serif:"Fraunces","Iowan Old Style","Times New Roman",serif;
+    --sans:"Inter Tight","Helvetica Neue",Arial,sans-serif;
+  }
+  html,body{background:var(--paper);color:var(--ink)}
+  body{font-family:var(--sans);font-size:16px;line-height:1.5;padding-inline:clamp(16px,3vw,40px);-webkit-font-smoothing:antialiased}
+  [hidden]{display:none!important}
+  a{color:inherit}
+  a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--gravy);outline-offset:3px}
+
+  .top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:18px;min-height:44px}
+  .mini{display:flex;align-items:center;gap:8px;text-decoration:none;font-family:var(--marker);font-size:24px;line-height:1;color:var(--red)}
+  .mini svg{width:52px;height:52px;display:block}
+  .mini[hidden]{display:none}
+  .nav{display:flex;gap:clamp(16px,3vw,32px);margin-left:auto;font-size:14px;letter-spacing:.06em;text-transform:uppercase}
+  .nav a{text-decoration:none}
+  .nav a[aria-current="page"],.nav a:hover{color:var(--gravy)}
+
+  .view{display:flex;flex-direction:column;align-items:center;padding-block:20px 110px}
+
+  /* home */
+  .show{position:relative;width:min(900px,100%);aspect-ratio:3/2;max-width:100%;cursor:pointer;border:0;padding:0;background:transparent}
+  .show img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity 900ms ease}
+  .show img.on{opacity:1}
+  .lockup{display:flex;flex-direction:column;align-items:center;gap:12px;text-decoration:none;margin-top:40px}
+  .lockup svg{width:150px;height:150px;display:block}
+  .lockup .nm{font-family:var(--marker);font-size:clamp(30px,3.4vw,40px);line-height:1;color:var(--red)}
+  .count{margin:18px 0 0;font-size:12px;letter-spacing:.08em;color:var(--muted);font-variant-numeric:tabular-nums}
+
+  /* work */
+  .head{text-align:center;display:flex;flex-direction:column;gap:10px;max-width:56ch;margin-bottom:36px}
+  .head h1{font-family:var(--serif);font-weight:400;font-size:clamp(34px,5vw,54px);line-height:1.02;margin:0;text-wrap:balance;letter-spacing:-.01em}
+  .head p{margin:0;color:var(--muted)}
+  .grid{width:min(1240px,100%);columns:3 300px;column-gap:14px}
+  .tile{display:block;width:100%;padding:0;margin:0 0 14px;border:0;background:var(--field);cursor:zoom-in;break-inside:avoid}
+  .tile img{display:block;width:100%;height:auto;transition:opacity .2s}
+  .tile:hover img{opacity:.9}
+
+  /* lightbox */
+  .lb{position:fixed;inset:0;z-index:20;background:rgba(248,231,164,.98);display:flex;align-items:center;justify-content:center;padding:calc(56px + env(safe-area-inset-top,0px)) 56px calc(56px + env(safe-area-inset-bottom,0px))}
+  .lb img{max-width:100%;max-height:100%;object-fit:contain}
+  .lb button{position:absolute;background:none;border:0;font:inherit;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);cursor:pointer;padding:12px}
+  .lb button:hover{color:var(--gravy)}
+  .lb .x{top:calc(8px + env(safe-area-inset-top,0px));right:8px}
+  .lb .pv{left:4px;top:50%;transform:translateY(-50%);font-size:20px}
+  .lb .nx{right:4px;top:50%;transform:translateY(-50%);font-size:20px}
+  .lb .n{position:absolute;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:0;right:0;margin:0;text-align:center;font-size:12px;letter-spacing:.08em;color:var(--muted);font-variant-numeric:tabular-nums}
+
+  /* about */
+  .about{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,64px);width:min(1100px,100%);align-items:center}
+  .about img{width:100%;display:block}
+  .copy{display:flex;flex-direction:column;gap:18px;font-size:18px;line-height:1.5;max-width:44ch}
+  .copy p{margin:0}
+  .copy .lead{font-family:var(--serif);font-size:clamp(26px,3vw,34px);line-height:1.15;text-wrap:balance}
+
+  /* contact */
+  .rates{width:min(760px,100%);display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:48px}
+  .rate{background:var(--paper);padding:22px 24px;display:flex;flex-direction:column;gap:6px}
+  .rate h2{margin:0;font-size:13px;font-weight:500;letter-spacing:.08em;text-transform:uppercase}
+  .rate .p{font-family:var(--serif);font-size:32px;line-height:1;color:var(--gravy);font-variant-numeric:tabular-nums}
+  .rate .p small{font-family:var(--sans);font-size:14px;color:var(--muted)}
+  .rate p{margin:0;color:var(--muted);font-size:14px}
+  .todo{color:var(--gravy)}
+  form{width:min(560px,100%);display:flex;flex-direction:column;gap:14px}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  input,select,textarea{font:inherit;font-size:16px;width:100%;box-sizing:border-box;padding:18px 24px;border:2px solid var(--line);background:var(--field);color:var(--ink);border-radius:0;appearance:none}
+  select{color:var(--muted)} select:valid{color:var(--ink)}
+  input::placeholder,textarea::placeholder{color:var(--muted)}
+  textarea{min-height:140px;resize:vertical}
+  .send{font:inherit;cursor:pointer;font-size:14px;letter-spacing:.08em;text-transform:uppercase;align-self:center;padding:16px 44px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);margin-top:8px}
+  .send:hover{background:var(--gravy);border-color:var(--gravy)}
+  .note{text-align:center;font-size:14px;color:var(--muted);min-height:1.5em;margin:0}
+  .mail{margin:28px 0 0;text-align:center;color:var(--muted);font-size:15px}
+
+  footer{border-top:1px solid var(--line);padding-block:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:13px;color:var(--muted);letter-spacing:.04em}
+
+  @media (max-width:760px){
+    .about{grid-template-columns:1fr}
+    .rates{grid-template-columns:1fr}
+    .lockup svg{width:112px;height:112px}
+    .grid{columns:2 140px;column-gap:10px} .tile{margin-bottom:10px}
+    .mini .nm{display:none}
+    .lb{padding-inline:16px}
+    .lb .pv,.lb .nx{top:auto;bottom:calc(4px + env(safe-area-inset-bottom,0px));transform:none}
+  }
+  @media (prefers-reduced-motion:reduce){.show img{transition:none}}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><filter id="marker" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="1" seed="4"/><feDisplacementMap in="SourceGraphic" scale="1.8"/></filter></defs></svg>
+</head>
+<body>
+<header class="top">
+  <a class="mini" href="#home" id="mini" aria-label="Sunday Gravy Studio, home" hidden><svg viewBox="0 0 240 240" aria-hidden="true" focusable="false"><g filter="url(#marker)"><path d="M29.9 128.8C35.1 128.8 50.7 128.6 60.8 128.9C71.0 129.1 80.7 130.0 90.8 130.5C100.9 131.0 111.5 131.9 121.5 131.6C131.6 131.3 141.2 129.2 151.1 128.7C161.0 128.2 170.9 128.1 180.9 128.5C190.9 128.9 206.0 130.7 211.0 131.2" fill="none" stroke="var(--stroke)" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M207.5 128.5C207.6 130.3 208.6 135.5 208.0 139.4C207.4 143.4 205.7 148.5 204.0 152.1C202.4 155.8 200.1 158.7 198.1 161.5C196.1 164.2 194.5 166.3 191.8 168.8C189.1 171.4 185.1 173.8 181.9 176.6C178.6 179.4 176.1 183.6 172.4 185.8C168.6 188.0 163.9 188.4 159.5 190.0C155.2 191.6 150.3 194.2 146.3 195.2C142.2 196.2 139.6 195.6 135.2 196.0C130.7 196.3 124.4 196.7 119.4 197.1C114.3 197.6 109.4 199.0 104.8 198.7C100.2 198.5 95.7 196.8 91.7 195.6C87.6 194.4 84.4 193.4 80.5 191.4C76.5 189.4 71.4 185.5 67.8 183.5C64.3 181.4 62.2 181.3 59.3 179.3C56.3 177.3 53.2 174.7 50.1 171.4C47.1 168.1 43.6 163.0 41.0 159.4C38.5 155.8 36.1 152.7 34.8 149.8C33.6 146.9 33.9 145.1 33.7 142.0C33.5 138.8 33.5 132.7 33.5 130.9" fill="none" stroke="var(--stroke)" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M91.7 204.4C94.9 204.5 104.5 204.8 110.9 205.0C117.3 205.1 123.6 205.7 130.0 205.3C136.4 205.0 146.0 203.1 149.2 202.6" fill="none" stroke="var(--stroke)" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M47.3 127.3C47.1 127.0 45.8 126.8 46.1 125.7C46.3 124.7 47.5 122.6 48.8 121.0C50.1 119.3 52.1 117.1 53.7 116.0C55.3 114.9 56.2 115.4 58.4 114.5C60.6 113.5 64.4 111.6 66.9 110.3C69.5 109.1 71.3 107.7 73.8 106.8C76.3 106.0 79.4 105.8 82.1 105.3C84.7 104.8 86.7 104.4 89.6 104.0C92.6 103.6 96.8 103.2 99.9 103.0C103.0 102.8 104.8 103.1 108.3 102.7C111.8 102.4 117.5 101.1 121.1 101.0C124.8 100.9 127.1 101.7 130.2 102.2C133.3 102.6 136.2 103.5 139.6 103.6C143.0 103.8 147.3 102.7 150.6 103.0C153.9 103.3 156.4 104.6 159.2 105.5C162.0 106.3 165.0 107.6 167.3 108.3C169.6 109.0 170.7 109.0 173.0 109.8C175.2 110.6 178.7 111.7 180.6 113.1C182.5 114.5 182.6 117.2 184.3 118.3C186.0 119.3 189.7 118.3 190.9 119.5C192.0 120.8 190.7 124.1 191.3 125.8C191.8 127.5 193.5 129.1 194.0 129.7" fill="none" stroke="var(--stroke)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M71.3 119.1C72.0 117.9 74.2 113.8 75.5 111.7C76.7 109.5 77.7 107.7 78.8 106.3C79.9 105.0 80.6 104.9 82.0 103.6C83.4 102.3 85.4 99.9 87.4 98.6C89.4 97.3 91.5 97.1 93.9 95.7C96.2 94.4 98.9 91.9 101.4 90.7C103.9 89.6 106.9 89.0 108.9 88.7C110.9 88.4 111.0 89.0 113.3 88.9C115.6 88.9 119.7 88.6 122.5 88.4C125.3 88.2 127.9 87.5 130.0 87.8C132.1 88.1 132.9 89.4 135.0 90.1C137.0 90.9 140.1 92.0 142.5 92.6C144.9 93.2 147.4 92.6 149.5 93.8C151.7 95.0 153.5 98.1 155.4 99.8C157.2 101.6 159.2 103.0 160.7 104.1C162.1 105.3 162.4 105.5 164.0 106.7C165.6 107.9 169.3 109.6 170.3 111.5C171.2 113.4 169.9 117.1 169.9 118.2" fill="none" stroke="var(--stroke)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M150.1 55.4C151.1 53.7 154.4 49.0 156.3 45.2C158.3 41.4 160.9 34.8 161.8 32.7" fill="none" stroke="var(--stroke)" stroke-width="4.14" stroke-linecap="round" stroke-linejoin="round"></path><path d="M155.4 59.4C156.4 57.4 159.1 51.1 161.7 47.1C164.2 43.0 169.1 37.0 170.5 35.0" fill="none" stroke="var(--stroke)" stroke-width="4.14" stroke-linecap="round" stroke-linejoin="round"></path><path d="M163.9 62.9C165.1 61.2 168.8 56.4 170.9 52.4C173.0 48.5 175.6 41.3 176.6 39.1" fill="none" stroke="var(--stroke)" stroke-width="4.14" stroke-linecap="round" stroke-linejoin="round"></path><path d="M168.6 65.7C169.8 64.1 173.8 59.9 176.0 56.1C178.2 52.3 180.8 45.1 181.7 43.0" fill="none" stroke="var(--stroke)" stroke-width="4.14" stroke-linecap="round" stroke-linejoin="round"></path><path d="M161.4 33.3C163.0 32.4 168.6 29.0 171.2 27.8C173.8 26.7 174.8 25.2 177.0 26.4C179.2 27.6 183.5 31.9 184.5 34.9C185.5 37.9 183.2 42.9 183.0 44.5" fill="none" stroke="var(--stroke)" stroke-width="4.95" stroke-linecap="round" stroke-linejoin="round"></path><path d="M179.1 27.2C180.1 25.1 183.0 19.0 185.2 14.9C187.3 10.8 189.6 6.6 191.8 2.5C194.0 -1.7 196.0 -5.8 198.3 -9.8C200.5 -13.8 203.0 -17.6 205.2 -21.6C207.5 -25.5 210.7 -31.6 211.8 -33.6" fill="none" stroke="var(--stroke)" stroke-width="6.75" stroke-linecap="round" stroke-linejoin="round"></path><path d="M114.5 105.9C114.8 107.4 116.6 108.4 116.5 110.2C116.4 111.9 115.1 114.8 114.1 116.4C113.1 118.1 112.4 118.8 110.6 120.1C108.7 121.4 104.9 123.3 102.8 124.0C100.6 124.7 98.9 124.0 97.4 124.3C96.0 124.7 95.6 126.4 94.1 126.2C92.6 126.1 90.3 124.5 88.3 123.6C86.3 122.6 84.0 121.4 82.3 120.4C80.7 119.5 79.3 119.3 78.6 118.0C77.9 116.8 78.7 115.2 78.1 113.2C77.5 111.1 74.9 108.0 74.9 105.9C74.8 103.9 77.1 102.5 77.7 100.8C78.3 99.1 77.8 97.8 78.4 96.0C79.0 94.1 79.6 90.9 81.4 89.6C83.2 88.4 87.1 88.9 89.3 88.4C91.5 88.0 93.2 87.4 94.7 87.0C96.2 86.5 96.8 85.9 98.3 85.8C99.8 85.7 102.1 85.6 103.9 86.6C105.7 87.6 107.5 90.2 109.1 91.8C110.8 93.4 112.9 94.6 113.8 96.2C114.8 97.8 114.6 99.7 114.8 101.3C114.9 103.0 114.2 104.4 114.5 105.9Z" fill="var(--red)"></path><path d="M80.3 96.3C80.3 96.1 80.4 95.7 80.6 95.2C80.9 94.7 81.2 93.6 81.8 93.2C82.5 92.9 84.1 93.2 84.6 92.9C85.1 92.7 84.4 92.2 84.8 91.7C85.2 91.3 86.1 90.4 86.9 90.2C87.7 89.9 88.7 90.3 89.4 90.3C90.2 90.2 91.0 89.8 91.6 89.9C92.3 89.9 93.2 90.6 93.5 90.7" fill="none" stroke="var(--card)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M155.7 104.5C155.3 106.3 154.7 108.0 154.2 109.8C153.6 111.6 153.2 113.8 152.3 115.2C151.5 116.5 150.1 116.7 149.0 117.8C147.9 118.9 147.1 120.7 145.6 121.7C144.0 122.7 141.7 123.3 139.6 123.6C137.6 124.0 135.3 123.8 133.3 123.8C131.2 123.8 129.1 124.2 127.3 123.6C125.4 123.1 123.2 122.0 122.0 120.6C120.9 119.2 121.5 117.3 120.5 115.4C119.5 113.6 116.9 111.8 116.1 109.7C115.2 107.6 115.3 104.5 115.5 102.8C115.7 101.1 116.8 100.9 117.3 99.5C117.8 98.0 117.2 95.9 118.4 94.2C119.5 92.5 122.4 90.4 124.0 89.2C125.7 87.9 126.6 87.8 128.2 86.8C129.7 85.8 131.4 83.7 133.2 83.0C134.9 82.4 136.9 82.5 138.7 82.9C140.5 83.3 142.3 84.7 144.1 85.5C145.9 86.3 147.8 86.2 149.4 87.5C151.0 88.9 152.3 91.5 153.5 93.4C154.6 95.3 155.9 97.2 156.3 99.0C156.6 100.9 156.0 102.7 155.7 104.5Z" fill="var(--red)"></path><path d="M121.2 94.3C121.2 94.1 120.7 93.6 120.9 93.0C121.2 92.5 122.3 91.4 122.9 91.0C123.4 90.6 123.9 90.9 124.2 90.6C124.5 90.3 124.2 89.3 124.8 89.0C125.4 88.7 127.4 89.0 128.1 88.8C128.7 88.7 128.5 88.3 128.9 88.1C129.3 87.8 129.7 87.4 130.4 87.4C131.1 87.3 132.5 87.8 132.9 87.8" fill="none" stroke="var(--card)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M151.5 74.1C151.9 74.8 153.2 76.9 153.8 78.6C154.3 80.4 155.5 83.2 154.8 84.6C154.2 85.9 151.5 85.5 150.0 86.8C148.5 88.1 146.8 90.5 146.0 92.5C145.2 94.5 144.7 97.0 145.4 98.7C146.0 100.4 148.5 101.4 150.0 102.7C151.4 104.0 153.4 105.2 153.9 106.5C154.3 107.8 153.0 110.0 152.8 110.7" fill="none" stroke="var(--stroke)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M162.5 73.5C162.9 74.1 164.4 76.3 165.2 77.4C166.0 78.6 167.2 79.1 167.1 80.3C167.1 81.5 165.8 83.1 165.0 84.5C164.2 85.8 163.3 87.2 162.3 88.6C161.4 90.0 159.8 91.9 159.2 92.9C158.5 93.8 158.2 93.4 158.3 94.4C158.3 95.4 158.3 97.3 159.5 99.0C160.6 100.8 164.3 104.0 165.3 105.0" fill="none" stroke="var(--stroke)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M173.0 58.3C173.3 59.7 174.1 62.0 173.6 63.3C173.1 64.7 171.2 64.9 170.1 66.2C169.0 67.4 168.2 69.8 166.8 71.0C165.5 72.2 163.3 72.8 162.0 73.3C160.6 73.7 160.3 73.4 158.7 73.5C157.1 73.6 154.1 74.0 152.4 73.8C150.7 73.6 149.9 72.8 148.3 72.3C146.8 71.8 144.5 71.6 143.3 70.9C142.1 70.2 141.7 69.7 141.3 68.2C140.9 66.7 141.1 63.8 140.8 62.2C140.6 60.5 140.4 60.0 139.9 58.5C139.5 56.9 137.7 54.8 138.2 53.0C138.6 51.2 141.5 49.2 142.8 47.8C144.0 46.4 144.6 45.5 145.7 44.8C146.8 44.1 147.8 44.4 149.3 43.5C150.8 42.7 153.3 39.9 154.8 39.6C156.4 39.4 157.4 41.7 158.6 41.9C159.8 42.2 160.5 40.5 162.2 41.2C163.8 41.9 166.9 44.9 168.4 46.3C169.9 47.8 170.6 48.6 171.1 50.0C171.7 51.3 171.4 53.3 171.7 54.7C172.0 56.1 172.7 56.9 173.0 58.3Z" fill="var(--red)"></path><path d="M143.5 51.0C143.5 50.8 143.5 50.2 143.6 49.5C143.7 48.9 143.7 47.6 144.1 47.0C144.5 46.4 145.7 46.2 146.1 45.9C146.6 45.6 146.4 45.5 146.8 45.2C147.2 44.8 147.9 44.2 148.6 44.1C149.3 44.0 150.3 44.4 150.9 44.4C151.5 44.3 151.6 44.0 151.9 44.0C152.2 44.0 152.6 44.3 152.8 44.3" fill="none" stroke="var(--card)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M90.5 69.7C91.7 68.6 98.8 65.4 97.8 62.9C96.9 60.4 84.4 57.6 84.7 54.9C85.0 52.3 99.3 49.3 99.6 46.9C99.9 44.5 88.9 41.6 86.7 40.5" fill="none" stroke="var(--stroke)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"></path></g></svg><span class="nm">Sunday Gravy Studio</span></a>
+  <nav class="nav" aria-label="Main">
+    <a href="#work" data-link="work">Work</a>
+    <a href="#about" data-link="about">About</a>
+    <a href="#contact" data-link="contact">Contact</a>
+  </nav>
+</header>
+
+<main>
+  <section class="view" data-view="home">
+    <button class="show" id="show" type="button" aria-label="Next photo">
+      <img src="photos/sg-01.jpg" alt="Bacon cheeseburger and fries in a checkered basket" class="on">
+      <img src="photos/sg-02.jpg" alt="Birria tacos on a pink plate with a hard shadow" loading="lazy">
+      <img src="photos/sg-03.jpg" alt="Cucumber margarita held over sliced cucumbers" loading="lazy">
+      <img src="photos/sg-04.jpg" alt="Pink drink poured over ice on a checkerboard tray with strawberries" loading="lazy">
+      <img src="photos/sg-05.jpg" alt="Shrimp tacos on a blue plate against orange and green" loading="lazy">
+      <img src="photos/sg-06.jpg" alt="Full breakfast with eggs, tomato and coffee, shot from above" loading="lazy">
+      <img src="photos/sg-07.jpg" alt="Flan being sliced on a green set" loading="lazy">
+      <img src="photos/sg-08.jpg" alt="Hand dipping a chip into crema on an orange grid" loading="lazy">
+      <img src="photos/sg-09.jpg" alt="Chips and salsa on lilac with a hand reaching in" loading="lazy">
+      <img src="photos/sg-10.jpg" alt="Fish and chips from overhead on dark wood" loading="lazy">
+    </button>
+    <a class="lockup" href="#work" aria-label="Sunday Gravy Studio, see the work"><svg viewBox="0 0 240 240" aria-hidden="true" focusable="false"><g filter="url(#marker)"><path d="M29.9 128.8C35.1 128.8 50.7 128.6 60.8 128.9C71.0 129.1 80.7 130.0 90.8 130.5C100.9 131.0 111.5 131.9 121.5 131.6C131.6 131.3 141.2 129.2 151.1 128.7C161.0 128.2 170.9 128.1 180.9 128.5C190.9 128.9 206.0 130.7 211.0 131.2" fill="none" stroke="var(--stroke)" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M207.5 128.5C207.6 130.3 208.6 135.5 208.0 139.4C207.4 143.4 205.7 148.5 204.0 152.1C202.4 155.8 200.1 158.7 198.1 161.5C196.1 164.2 194.5 166.3 191.8 168.8C189.1 171.4 185.1 173.8 181.9 176.6C178.6 179.4 176.1 183.6 172.4 185.8C168.6 188.0 163.9 188.4 159.5 190.0C155.2 191.6 150.3 194.2 146.3 195.2C142.2 196.2 139.6 195.6 135.2 196.0C130.7 196.3 124.4 196.7 119.4 197.1C114.3 197.6 109.4 199.0 104.8 198.7C100.2 198.5 95.7 196.8 91.7 195.6C87.6 194.4 84.4 193.4 80.5 191.4C76.5 189.4 71.4 185.5 67.8 183.5C64.3 181.4 62.2 181.3 59.3 179.3C56.3 177.3 53.2 174.7 50.1 171.4C47.1 168.1 43.6 163.0 41.0 159.4C38.5 155.8 36.1 152.7 34.8 149.8C33.6 146.9 33.9 145.1 33.7 142.0C33.5 138.8 33.5 132.7 33.5 130.9" fill="none" stroke="var(--stroke)" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M91.7 204.4C94.9 204.5 104.5 204.8 110.9 205.0C117.3 205.1 123.6 205.7 130.0 205.3C136.4 205.0 146.0 203.1 149.2 202.6" fill="none" stroke="var(--stroke)" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M47.3 127.3C47.1 127.0 45.8 126.8 46.1 125.7C46.3 124.7 47.5 122.6 48.8 121.0C50.1 119.3 52.1 117.1 53.7 116.0C55.3 114.9 56.2 115.4 58.4 114.5C60.6 113.5 64.4 111.6 66.9 110.3C69.5 109.1 71.3 107.7 73.8 106.8C76.3 106.0 79.4 105.8 82.1 105.3C84.7 104.8 86.7 104.4 89.6 104.0C92.6 103.6 96.8 103.2 99.9 103.0C103.0 102.8 104.8 103.1 108.3 102.7C111.8 102.4 117.5 101.1 121.1 101.0C124.8 100.9 127.1 101.7 130.2 102.2C133.3 102.6 136.2 103.5 139.6 103.6C143.0 103.8 147.3 102.7 150.6 103.0C153.9 103.3 156.4 104.6 159.2 105.5C162.0 106.3 165.0 107.6 167.3 108.3C169.6 109.0 170.7 109.0 173.0 109.8C175.2 110.6 178.7 111.7 180.6 113.1C182.5 114.5 182.6 117.2 184.3 118.3C186.0 119.3 189.7 118.3 190.9 119.5C192.0 120.8 190.7 124.1 191.3 125.8C191.8 127.5 193.5 129.1 194.0 129.7" fill="none" stroke="var(--stroke)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M71.3 119.1C72.0 117.9 74.2 113.8 75.5 111.7C76.7 109.5 77.7 107.7 78.8 106.3C79.9 105.0 80.6 104.9 82.0 103.6C83.4 102.3 85.4 99.9 87.4 98.6C89.4 97.3 91.5 97.1 93.9 95.7C96.2 94.4 98.9 91.9 101.4 90.7C103.9 89.6 106.9 89.0 108.9 88.7C110.9 88.4 111.0 89.0 113.3 88.9C115.6 88.9 119.7 88.6 122.5 88.4C125.3 88.2 127.9 87.5 130.0 87.8C132.1 88.1 132.9 89.4 135.0 90.1C137.0 90.9 140.1 92.0 142.5 92.6C144.9 93.2 147.4 92.6 149.5 93.8C151.7 95.0 153.5 98.1 155.4 99.8C157.2 101.6 159.2 103.0 160.7 104.1C162.1 105.3 162.4 105.5 164.0 106.7C165.6 107.9 169.3 109.6 170.3 111.5C171.2 113.4 169.9 117.1 169.9 118.2" fill="none" stroke="var(--stroke)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M150.1 55.4C151.1 53.7 154.4 49.0 156.3 45.2C158.3 41.4 160.9 34.8 161.8 32.7" fill="none" stroke="var(--stroke)" stroke-width="4.14" stroke-linecap="round" stroke-linejoin="round"></path><path d="M155.4 59.4C156.4 57.4 159.1 51.1 161.7 47.1C164.2 43.0 169.1 37.0 170.5 35.0" fill="none" stroke="var(--stroke)" stroke-width="4.14" stroke-linecap="round" stroke-linejoin="round"></path><path d="M163.9 62.9C165.1 61.2 168.8 56.4 170.9 52.4C173.0 48.5 175.6 41.3 176.6 39.1" fill="none" stroke="var(--stroke)" stroke-width="4.14" stroke-linecap="round" stroke-linejoin="round"></path><path d="M168.6 65.7C169.8 64.1 173.8 59.9 176.0 56.1C178.2 52.3 180.8 45.1 181.7 43.0" fill="none" stroke="var(--stroke)" stroke-width="4.14" stroke-linecap="round" stroke-linejoin="round"></path><path d="M161.4 33.3C163.0 32.4 168.6 29.0 171.2 27.8C173.8 26.7 174.8 25.2 177.0 26.4C179.2 27.6 183.5 31.9 184.5 34.9C185.5 37.9 183.2 42.9 183.0 44.5" fill="none" stroke="var(--stroke)" stroke-width="4.95" stroke-linecap="round" stroke-linejoin="round"></path><path d="M179.1 27.2C180.1 25.1 183.0 19.0 185.2 14.9C187.3 10.8 189.6 6.6 191.8 2.5C194.0 -1.7 196.0 -5.8 198.3 -9.8C200.5 -13.8 203.0 -17.6 205.2 -21.6C207.5 -25.5 210.7 -31.6 211.8 -33.6" fill="none" stroke="var(--stroke)" stroke-width="6.75" stroke-linecap="round" stroke-linejoin="round"></path><path d="M114.5 105.9C114.8 107.4 116.6 108.4 116.5 110.2C116.4 111.9 115.1 114.8 114.1 116.4C113.1 118.1 112.4 118.8 110.6 120.1C108.7 121.4 104.9 123.3 102.8 124.0C100.6 124.7 98.9 124.0 97.4 124.3C96.0 124.7 95.6 126.4 94.1 126.2C92.6 126.1 90.3 124.5 88.3 123.6C86.3 122.6 84.0 121.4 82.3 120.4C80.7 119.5 79.3 119.3 78.6 118.0C77.9 116.8 78.7 115.2 78.1 113.2C77.5 111.1 74.9 108.0 74.9 105.9C74.8 103.9 77.1 102.5 77.7 100.8C78.3 99.1 77.8 97.8 78.4 96.0C79.0 94.1 79.6 90.9 81.4 89.6C83.2 88.4 87.1 88.9 89.3 88.4C91.5 88.0 93.2 87.4 94.7 87.0C96.2 86.5 96.8 85.9 98.3 85.8C99.8 85.7 102.1 85.6 103.9 86.6C105.7 87.6 107.5 90.2 109.1 91.8C110.8 93.4 112.9 94.6 113.8 96.2C114.8 97.8 114.6 99.7 114.8 101.3C114.9 103.0 114.2 104.4 114.5 105.9Z" fill="var(--red)"></path><path d="M80.3 96.3C80.3 96.1 80.4 95.7 80.6 95.2C80.9 94.7 81.2 93.6 81.8 93.2C82.5 92.9 84.1 93.2 84.6 92.9C85.1 92.7 84.4 92.2 84.8 91.7C85.2 91.3 86.1 90.4 86.9 90.2C87.7 89.9 88.7 90.3 89.4 90.3C90.2 90.2 91.0 89.8 91.6 89.9C92.3 89.9 93.2 90.6 93.5 90.7" fill="none" stroke="var(--card)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M155.7 104.5C155.3 106.3 154.7 108.0 154.2 109.8C153.6 111.6 153.2 113.8 152.3 115.2C151.5 116.5 150.1 116.7 149.0 117.8C147.9 118.9 147.1 120.7 145.6 121.7C144.0 122.7 141.7 123.3 139.6 123.6C137.6 124.0 135.3 123.8 133.3 123.8C131.2 123.8 129.1 124.2 127.3 123.6C125.4 123.1 123.2 122.0 122.0 120.6C120.9 119.2 121.5 117.3 120.5 115.4C119.5 113.6 116.9 111.8 116.1 109.7C115.2 107.6 115.3 104.5 115.5 102.8C115.7 101.1 116.8 100.9 117.3 99.5C117.8 98.0 117.2 95.9 118.4 94.2C119.5 92.5 122.4 90.4 124.0 89.2C125.7 87.9 126.6 87.8 128.2 86.8C129.7 85.8 131.4 83.7 133.2 83.0C134.9 82.4 136.9 82.5 138.7 82.9C140.5 83.3 142.3 84.7 144.1 85.5C145.9 86.3 147.8 86.2 149.4 87.5C151.0 88.9 152.3 91.5 153.5 93.4C154.6 95.3 155.9 97.2 156.3 99.0C156.6 100.9 156.0 102.7 155.7 104.5Z" fill="var(--red)"></path><path d="M121.2 94.3C121.2 94.1 120.7 93.6 120.9 93.0C121.2 92.5 122.3 91.4 122.9 91.0C123.4 90.6 123.9 90.9 124.2 90.6C124.5 90.3 124.2 89.3 124.8 89.0C125.4 88.7 127.4 89.0 128.1 88.8C128.7 88.7 128.5 88.3 128.9 88.1C129.3 87.8 129.7 87.4 130.4 87.4C131.1 87.3 132.5 87.8 132.9 87.8" fill="none" stroke="var(--card)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M151.5 74.1C151.9 74.8 153.2 76.9 153.8 78.6C154.3 80.4 155.5 83.2 154.8 84.6C154.2 85.9 151.5 85.5 150.0 86.8C148.5 88.1 146.8 90.5 146.0 92.5C145.2 94.5 144.7 97.0 145.4 98.7C146.0 100.4 148.5 101.4 150.0 102.7C151.4 104.0 153.4 105.2 153.9 106.5C154.3 107.8 153.0 110.0 152.8 110.7" fill="none" stroke="var(--stroke)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M162.5 73.5C162.9 74.1 164.4 76.3 165.2 77.4C166.0 78.6 167.2 79.1 167.1 80.3C167.1 81.5 165.8 83.1 165.0 84.5C164.2 85.8 163.3 87.2 162.3 88.6C161.4 90.0 159.8 91.9 159.2 92.9C158.5 93.8 158.2 93.4 158.3 94.4C158.3 95.4 158.3 97.3 159.5 99.0C160.6 100.8 164.3 104.0 165.3 105.0" fill="none" stroke="var(--stroke)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M173.0 58.3C173.3 59.7 174.1 62.0 173.6 63.3C173.1 64.7 171.2 64.9 170.1 66.2C169.0 67.4 168.2 69.8 166.8 71.0C165.5 72.2 163.3 72.8 162.0 73.3C160.6 73.7 160.3 73.4 158.7 73.5C157.1 73.6 154.1 74.0 152.4 73.8C150.7 73.6 149.9 72.8 148.3 72.3C146.8 71.8 144.5 71.6 143.3 70.9C142.1 70.2 141.7 69.7 141.3 68.2C140.9 66.7 141.1 63.8 140.8 62.2C140.6 60.5 140.4 60.0 139.9 58.5C139.5 56.9 137.7 54.8 138.2 53.0C138.6 51.2 141.5 49.2 142.8 47.8C144.0 46.4 144.6 45.5 145.7 44.8C146.8 44.1 147.8 44.4 149.3 43.5C150.8 42.7 153.3 39.9 154.8 39.6C156.4 39.4 157.4 41.7 158.6 41.9C159.8 42.2 160.5 40.5 162.2 41.2C163.8 41.9 166.9 44.9 168.4 46.3C169.9 47.8 170.6 48.6 171.1 50.0C171.7 51.3 171.4 53.3 171.7 54.7C172.0 56.1 172.7 56.9 173.0 58.3Z" fill="var(--red)"></path><path d="M143.5 51.0C143.5 50.8 143.5 50.2 143.6 49.5C143.7 48.9 143.7 47.6 144.1 47.0C144.5 46.4 145.7 46.2 146.1 45.9C146.6 45.6 146.4 45.5 146.8 45.2C147.2 44.8 147.9 44.2 148.6 44.1C149.3 44.0 150.3 44.4 150.9 44.4C151.5 44.3 151.6 44.0 151.9 44.0C152.2 44.0 152.6 44.3 152.8 44.3" fill="none" stroke="var(--card)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M90.5 69.7C91.7 68.6 98.8 65.4 97.8 62.9C96.9 60.4 84.4 57.6 84.7 54.9C85.0 52.3 99.3 49.3 99.6 46.9C99.9 44.5 88.9 41.6 86.7 40.5" fill="none" stroke="var(--stroke)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"></path></g></svg><span class="nm">Sunday Gravy Studio</span></a>
+    <p class="count" id="count">1 / 10</p>
+  </section>
+
+  <section class="view" data-view="work" hidden>
+    <div class="head">
+      <h1>Food and drink, shot hard and bright</h1>
+      <p>Restaurants, bars, bakeries and cafés in Philadelphia.</p>
+    </div>
+    <div class="grid" id="grid">
+      <button class="tile" type="button" data-i="0" aria-label="Open photo: Bacon cheeseburger and fries in a checkered basket"><img src="photos/sg-01-t.jpg" alt="Bacon cheeseburger and fries in a checkered basket" width="900" height="600" loading="lazy"></button>
+      <button class="tile" type="button" data-i="1" aria-label="Open photo: Birria tacos on a pink plate with a hard shadow"><img src="photos/sg-02-t.jpg" alt="Birria tacos on a pink plate with a hard shadow" width="900" height="599" loading="lazy"></button>
+      <button class="tile" type="button" data-i="2" aria-label="Open photo: Cucumber margarita held over sliced cucumbers"><img src="photos/sg-03-t.jpg" alt="Cucumber margarita held over sliced cucumbers" width="900" height="599" loading="lazy"></button>
+      <button class="tile" type="button" data-i="3" aria-label="Open photo: Pink drink poured over ice on a checkerboard tray with strawberries"><img src="photos/sg-04-t.jpg" alt="Pink drink poured over ice on a checkerboard tray with strawberries" width="900" height="899" loading="lazy"></button>
+      <button class="tile" type="button" data-i="4" aria-label="Open photo: Shrimp tacos on a blue plate against orange and green"><img src="photos/sg-05-t.jpg" alt="Shrimp tacos on a blue plate against orange and green" width="900" height="599" loading="lazy"></button>
+      <button class="tile" type="button" data-i="5" aria-label="Open photo: Full breakfast with eggs, tomato and coffee, shot from above"><img src="photos/sg-06-t.jpg" alt="Full breakfast with eggs, tomato and coffee, shot from above" width="900" height="622" loading="lazy"></button>
+      <button class="tile" type="button" data-i="6" aria-label="Open photo: Flan being sliced on a green set"><img src="photos/sg-07-t.jpg" alt="Flan being sliced on a green set" width="900" height="599" loading="lazy"></button>
+      <button class="tile" type="button" data-i="7" aria-label="Open photo: Hand dipping a chip into crema on an orange grid"><img src="photos/sg-08-t.jpg" alt="Hand dipping a chip into crema on an orange grid" width="900" height="612" loading="lazy"></button>
+      <button class="tile" type="button" data-i="8" aria-label="Open photo: Chips and salsa on lilac with a hand reaching in"><img src="photos/sg-09-t.jpg" alt="Chips and salsa on lilac with a hand reaching in" width="900" height="642" loading="lazy"></button>
+      <button class="tile" type="button" data-i="9" aria-label="Open photo: Fish and chips from overhead on dark wood"><img src="photos/sg-10-t.jpg" alt="Fish and chips from overhead on dark wood" width="900" height="600" loading="lazy"></button>
+      <button class="tile" type="button" data-i="10" aria-label="Open photo: Tostada with tomato and sprouts on a sunlit wood table"><img src="photos/sg-11-t.jpg" alt="Tostada with tomato and sprouts on a sunlit wood table" width="900" height="600" loading="lazy"></button>
+      <button class="tile" type="button" data-i="11" aria-label="Open photo: A pile of fresh limes"><img src="photos/sg-12-t.jpg" alt="A pile of fresh limes" width="600" height="900" loading="lazy"></button>
+      <button class="tile" type="button" data-i="12" aria-label="Open photo: Salt-rimmed pink margarita with a lime wedge"><img src="photos/sg-13-t.jpg" alt="Salt-rimmed pink margarita with a lime wedge" width="900" height="600" loading="lazy"></button>
+      <button class="tile" type="button" data-i="13" aria-label="Open photo: Shrimp tacos on a blue plate, orange wall, green table"><img src="photos/sg-14-t.jpg" alt="Shrimp tacos on a blue plate, orange wall, green table" width="719" height="900" loading="lazy"></button>
+      <button class="tile" type="button" data-i="14" aria-label="Open photo: Tortilla chips and crema from overhead on an orange grid"><img src="photos/sg-15-t.jpg" alt="Tortilla chips and crema from overhead on an orange grid" width="599" height="900" loading="lazy"></button>
+      <button class="tile" type="button" data-i="15" aria-label="Open photo: Bangers, mash and peas on a wood table"><img src="photos/sg-16-t.jpg" alt="Bangers, mash and peas on a wood table" width="900" height="600" loading="lazy"></button>
+      <button class="tile" type="button" data-i="16" aria-label="Open photo: Soda poured over ice with a knife and lime on the board"><img src="photos/sg-17-t.jpg" alt="Soda poured over ice with a knife and lime on the board" width="900" height="759" loading="lazy"></button>
+      <button class="tile" type="button" data-i="17" aria-label="Open photo: Half an avocado on white"><img src="photos/sg-18-t.jpg" alt="Half an avocado on white" width="900" height="599" loading="lazy"></button>
+      <button class="tile" type="button" data-i="18" aria-label="Open photo: Chips and salsa on lilac, second angle"><img src="photos/sg-19-t.jpg" alt="Chips and salsa on lilac, second angle" width="900" height="636" loading="lazy"></button>
+      <button class="tile" type="button" data-i="19" aria-label="Open photo: Cleaned squid, tentacles and rings"><img src="photos/sg-20-t.jpg" alt="Cleaned squid, tentacles and rings" width="900" height="599" loading="lazy"></button>
+      <button class="tile" type="button" data-i="20" aria-label="Open photo: Three layer cakes on a mosaic patio table"><img src="photos/sg-21-t.jpg" alt="Three layer cakes on a mosaic patio table" width="900" height="600" loading="lazy"></button>
+    </div>
+  </section>
+
+  <section class="view" data-view="about" hidden>
+    <div class="about">
+      <img src="photos/sg-07-t.jpg" alt="Flan being sliced on a green set">
+      <div class="copy">
+        <p class="lead">Sunday Gravy is a food photo studio in South Philly.</p>
+        <p>Hard light. Bright color. Food that looks like you could reach in and grab it.</p>
+        <p>We shoot for restaurants, bars, bakeries and cafés. New menus, cocktails, openings, and the stuff you need to post every week.</p>
+        <p>Joshua Albert runs the studio and shoots every job himself.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" data-view="contact" hidden>
+    <div class="head">
+      <h1>Book a shoot</h1>
+      <p>Tell us what you're working on and we'll get back to you.</p>
+    </div>
+    <div class="rates">
+      <div class="rate"><h2>Menu shoot, half day</h2><div class="p">$750</div><p>20 finished photos</p></div>
+      <div class="rate"><h2>Menu shoot, full day</h2><div class="p">$1,400</div><p>45 finished photos</p></div>
+      <div class="rate"><h2>Dish drop</h2><div class="p">$350</div><p>One hour, 6 photos. New specials and one-offs.</p></div>
+      <div class="rate"><h2>Monthly content</h2><div class="p">$600<small> /mo</small></div><p>One visit a month, 10 photos for social.</p></div>
+    </div>
+    <form id="inquiry" novalidate>
+      <label class="sr" for="f-name">Full name</label>
+      <input id="f-name" placeholder="Full name" autocomplete="name">
+      <label class="sr" for="f-biz">Restaurant, bar, or café</label>
+      <input id="f-biz" placeholder="Restaurant, bar, or café" autocomplete="organization">
+      <label class="sr" for="f-email">Email</label>
+      <input id="f-email" type="email" placeholder="Email" autocomplete="email">
+      <label class="sr" for="f-type">What do you need</label>
+      <select id="f-type" required>
+        <option value="" disabled selected>What do you need</option>
+        <option>Menu shoot</option>
+        <option>Dish drop</option>
+        <option>Monthly content</option>
+        <option>Something else</option>
+      </select>
+      <label class="sr" for="f-date">Date you're hoping for</label>
+      <input id="f-date" placeholder="Date you're hoping for">
+      <label class="sr" for="f-notes">Anything else</label>
+      <textarea id="f-notes" placeholder="Anything else we should know"></textarea>
+      <button class="send" type="submit">Send</button>
+      <p class="note" id="f-note" aria-live="polite"></p>
+    </form>
+    <p class="mail">Or email <span class="todo">hello@sundaygravystudio.com</span> <span class="todo">(email not set up yet)</span></p>
+  </section>
+</main>
+
+<footer><span>Sunday Gravy Studio · South Philadelphia</span><span>@sundaygravystudio</span></footer>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
+  <img id="lb-img" alt="">
+  <button class="x" type="button" id="lb-x">Close</button>
+  <button class="pv" type="button" id="lb-p" aria-label="Previous photo">&larr;</button>
+  <button class="nx" type="button" id="lb-n" aria-label="Next photo">&rarr;</button>
+  <p class="n" id="lb-c"></p>
+</div>
+
+<script>
+const views=[...document.querySelectorAll('[data-view]')];
+const mini=document.getElementById('mini');
+function route(){
+  const key=(location.hash||'#home').slice(1);
+  const t=views.find(v=>v.dataset.view===key)||views[0];
+  views.forEach(v=>v.hidden=v!==t);
+  mini.hidden=t.dataset.view==='home';
+  document.querySelectorAll('[data-link]').forEach(a=>a.dataset.link===t.dataset.view?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current'));
+  window.scrollTo(0,0);
+}
+addEventListener('hashchange',route);route();
+
+const imgs=[...document.querySelectorAll('#show img')];let k=0,timer;
+const count=document.getElementById('count');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function step(){imgs[k].classList.remove('on');k=(k+1)%imgs.length;imgs[k].classList.add('on');count.textContent=`${k+1} / ${imgs.length}`;}
+function start(){clearInterval(timer);if(!reduce)timer=setInterval(step,3500);}
+document.getElementById('show').addEventListener('click',()=>{step();start();});
+start();
+
+const tiles=[...document.querySelectorAll('.tile img')];
+const lb=document.getElementById('lb'),li=document.getElementById('lb-img'),lc=document.getElementById('lb-c');let at=0,opener=null;
+function openAt(i){at=(i+tiles.length)%tiles.length;const t=tiles[at];li.src=t.src.replace('-t.jpg','.jpg');li.alt=t.alt;lc.textContent=`${at+1} / ${tiles.length}`;lb.hidden=false;}
+function closeLb(){lb.hidden=true;if(opener)opener.focus();}
+document.getElementById('grid').addEventListener('click',e=>{const b=e.target.closest('.tile');if(!b)return;opener=b;openAt(+b.dataset.i);document.getElementById('lb-x').focus();});
+document.getElementById('lb-x').onclick=closeLb;
+document.getElementById('lb-p').onclick=()=>openAt(at-1);
+document.getElementById('lb-n').onclick=()=>openAt(at+1);
+lb.addEventListener('click',e=>{if(e.target===lb)closeLb();});
+addEventListener('keydown',e=>{if(lb.hidden)return;if(e.key==='Escape')closeLb();if(e.key==='ArrowRight')openAt(at+1);if(e.key==='ArrowLeft')openAt(at-1);});
+
+document.getElementById('inquiry').addEventListener('submit',e=>{e.preventDefault();document.getElementById('f-note').textContent="Preview only. This form isn't connected to email yet.";});
+</script>
+</body>
+</html>
