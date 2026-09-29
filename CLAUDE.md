@@ -35,7 +35,7 @@
 - Photo source: ~/Desktop/forsundaygravy (originals) and ~/Desktop/forsundaygravy/web (1800px copies).
 
 ## First session: get it live
-Status Sep 29 2026: steps 0-3 done. DNS verified (apex A records + www CNAME at GoDaddy, sundaygravy.studio 301s to https://www.sundaygravystudio.com). Site is live over http. GitHub had not issued the HTTPS certificate yet (https_certificate null; domain removed and re-added once to retrigger). TODO: check `gh api repos/joshua-albert/sundaygravy-site/pages`, then enforce HTTPS: `gh api -X PUT repos/joshua-albert/sundaygravy-site/pages -F https_enforced=true`. Until then http->https->http redirects cost ~1s in Lighthouse (local Lighthouse: home 100, restaurant page 98).
+Status Sep 29 2026: first session DONE. DNS verified; HTTPS certificate issued (Let's Encrypt, auto-renews) and Enforce HTTPS on. All of http/https, apex/www and sundaygravy.studio end at https://www.sundaygravystudio.com. Mobile Lighthouse on live: home 100/100/100/100, restaurant page 100s, work 97 perf. Lesson: the cert never started until the custom domain was removed, left off ~2 min, then re-added (instant remove/re-add did nothing). Removing/re-adding via API makes GitHub commit to CNAME on origin, so pull before pushing.
 
 0. Permissions: move `claude-settings.json` to `.claude/settings.json` (mkdir .claude first) and tell Joshua to restart Claude Code so it loads. It pre-approves git, gh, file edits, dig/curl and similar, and blocks force-push and rm -rf.
 1. Create a GitHub repo `joshua-albert/sundaygravy-site` (public, so Pages is free) with `gh repo create`, and push `main`. If `gh` isn't installed or logged in, walk him through `brew install gh` and `gh auth login`.
