@@ -27,6 +27,8 @@
 - Photo source: ~/Desktop/forsundaygravy (originals) and ~/Desktop/forsundaygravy/web (1800px copies).
 
 ## First session: get it live
+Status Sep 29 2026: steps 0-2 done (repo joshua-albert/sundaygravy-site pushed, Pages on from main /, custom domain set, first build OK). Waiting on Joshua's GoDaddy DNS + forwarding, then steps 4-5.
+
 0. Permissions: move `claude-settings.json` to `.claude/settings.json` (mkdir .claude first) and tell Joshua to restart Claude Code so it loads. It pre-approves git, gh, file edits, dig/curl and similar, and blocks force-push and rm -rf.
 1. Create a GitHub repo `joshua-albert/sundaygravy-site` (public, so Pages is free) with `gh repo create`, and push `main`. If `gh` isn't installed or logged in, walk him through `brew install gh` and `gh auth login`.
 2. Turn on GitHub Pages (Deploy from branch: main, / root) via `gh api`, and set the custom domain to www.sundaygravystudio.com.
