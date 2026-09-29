@@ -3,7 +3,7 @@
 ## Who and what
 - Owner: Joshua Albert (GitHub: joshua-albert, git email joshuascottalbert@gmail.com). Not very technical. He directs and reviews; you build. Make reasonable calls and show results instead of asking first. Explain anything he has to do himself in plain steps.
 - Business: Sunday Gravy Studio, a food and drink photography studio in South Philadelphia, its own LLC, separate from his other business Cowdog Studio (cowdog.studio). Clients: restaurants, bars, bakeries, cafés. No product photography for now.
-- Domains he owns: sundaygravystudio.com (primary; site lives at https://www.sundaygravystudio.com) and sundaygravy.studio (should 301 redirect to the primary). Which registrar they're at is NOT confirmed: ask him or check with `whois` before giving DNS steps.
+- Domains he owns: sundaygravystudio.com (primary; site lives at https://www.sundaygravystudio.com) and sundaygravy.studio (should 301 redirect to the primary). Both are registered at GoDaddy (confirmed by Joshua Sep 29 2026), same as his ~30 Cowdog domains. For Cowdog he set up 301 forwarding in GoDaddy (Permanent 301, https, no masking), so use that same pattern for sundaygravy.studio.
 - Instagram handle planned: @sundaygravystudio (not yet confirmed as claimed).
 
 ## Stack (same approach as his Cowdog site at ~/cowdogwebsite/cowdog-main)
@@ -30,11 +30,11 @@
 0. Permissions: move `claude-settings.json` to `.claude/settings.json` (mkdir .claude first) and tell Joshua to restart Claude Code so it loads. It pre-approves git, gh, file edits, dig/curl and similar, and blocks force-push and rm -rf.
 1. Create a GitHub repo `joshua-albert/sundaygravy-site` (public, so Pages is free) with `gh repo create`, and push `main`. If `gh` isn't installed or logged in, walk him through `brew install gh` and `gh auth login`.
 2. Turn on GitHub Pages (Deploy from branch: main, / root) via `gh api`, and set the custom domain to www.sundaygravystudio.com.
-3. DNS at his registrar (confirm which one first). GitHub Pages' documented records:
+3. DNS in GoDaddy (Domain Portfolio > sundaygravystudio.com > DNS). Remove GoDaddy's default parked A record for @ and any default www CNAME first. GitHub Pages' documented records:
    - apex sundaygravystudio.com: A records 185.199.108.153, 185.199.109.153, 185.199.110.153, 185.199.111.153
    - www: CNAME to joshua-albert.github.io
    - Re-check these against docs.github.com before giving them to him.
-   - sundaygravy.studio: 301 forward to https://www.sundaygravystudio.com (registrar forwarding is fine).
+   - sundaygravy.studio: GoDaddy Forwarding > Permanent (301) to https://www.sundaygravystudio.com, forward only (no masking).
 4. After DNS resolves, turn on "Enforce HTTPS". Verify with `dig` and `curl -I`.
 5. Tell him exactly what's done and what he still has to click.
 
