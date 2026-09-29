@@ -7,11 +7,13 @@
 - Instagram handle planned: @sundaygravystudio (not yet confirmed as claimed).
 
 ## Stack (same approach as his Cowdog site at ~/cowdogwebsite/cowdog-main)
-- Hand-written static HTML/CSS/JS, no framework, no build step. GitHub Pages serves the `main` branch from the repo root. `CNAME` file = www.sundaygravystudio.com. `.nojekyll` present.
-- Keep it that way unless there's a strong reason. Look at the Cowdog repo for patterns (SEO meta, schema, contact form, sitemap) and reuse what works.
+- Static HTML/CSS/JS, no framework. GitHub Pages serves the `main` branch from the repo root. `CNAME` file = www.sundaygravystudio.com. `.nojekyll` present.
+- Since Sep 29 2026 the pages are GENERATED: edit `tools/content/*.html` (and `tools/content/blog/`), `tools/build.py` (layout, schema, prices in RATES), `tools/site.css`, then run `python3 tools/build.py` and commit the content and output together. Never hand-edit the generated `*/index.html`; the next build overwrites them. See README.md.
+- Photos: `tools/photos.py` (slug + alt, Work page order); `python3 tools/photos.py` makes the WebP sizes (needs Pillow).
+- The local ~/cowdogwebsite/cowdog-main checkout is behind origin/main. For current Cowdog code use `git show origin/main:<path>` there (after `git fetch`), or the live site.
 
 ## Brand
-- Logo: D4.3 "Meatball Lift" (a fork lifting a meatball out of a bowl of spaghetti with two meatballs left, steam), a loose one-color red marker doodle. It's inline SVG in index.html; favicon.svg is the same mark on butter. The final logo will eventually be redrawn by hand and scanned; when he supplies a scan, swap it in.
+- Logo: D4.3 "Meatball Lift" (a fork lifting a meatball out of a bowl of spaghetti with two meatballs left, steam), a loose one-color red marker doodle. It's inline SVG, stored grouped (bowl / steam / lift) in tools/mark.svg and animated in site.css: the fork lifts and the steam drifts, looping on the home lockup and on hover in the header and footer, off under prefers-reduced-motion. favicon.svg is the same mark on butter. The final logo will eventually be redrawn by hand and scanned; when he supplies a scan, swap it in.
 - Colors: tomato red #D52B1E, ink #1A1918, white page background, butter #F8E7A4 as accent (footer, favicon, social, print).
 - Type: Caveat Brush (marker lettering for the name), Fraunces (headlines), Inter Tight (body/UI). All from Google Fonts.
 - Layout reference: rlga.photo (minimal, big rotating homepage photo, mark with name under it).
@@ -21,9 +23,15 @@
 - Don't lean on his photojournalism background as a credential.
 - Verify facts before stating them. If you can't verify something, say so.
 
-## Current content
-- Pages (hash-routed views in index.html): Home (10-photo slideshow + lockup), Work (21-photo grid + lightbox), About, Contact (prices + inquiry form).
-- Prices on the page are PROPOSED, not final: menu shoot half day $750 (20 photos), full day $1,400 (45 photos), dish drop $350 (1 hr, 6 photos), monthly content $600/mo (1 visit, 10 photos). Confirm with him before treating as final.
+## Current content (Sep 29 2026, round 2 from NEXT-BRIEF.md)
+- Real pages: / (slideshow + lockup + H1 "Food & Restaurant Photography in Philadelphia"), /work/, /restaurant-photography/, /food-photography/, /drink-photography/, /pricing/, /about/, /contact/, /blog/ (10 guides, all dated 2026-09-29, the day they were written), 404.html. Old /#work etc. links redirect via js/site.js.
+- Prices (Joshua cut them Sep 29 2026): menu shoot half day $500 (20 photos), full day $950 (45 photos), dish drop $250 (1 hr, 6 photos), monthly content $600/mo (1 visit, 10 photos). He may prefer exact thirds ($467 / $933 / $233).
+- About: Joshua photo (from Cowdog), "22 years working in restaurants" as plain fact, sister company of Cowdog Studio (linked, also in footer).
+- Contact form posts to the Cowdog Formspree form (xdeoekqz) with subject "Sunday Gravy inquiry: <name> / <business>", honeypot `_gotcha`. Delivers wherever that Formspree form sends (Joshua wants joshua@cowdog.studio). No email address shown on the site.
+- GA4: js/sg-track.js has GA_ID = '' until Joshua creates the Sunday Gravy GA4 property. Event generate_lead fires on successful form send.
+- Not yet on the site, waiting on Joshua: Instagram handle (unconfirmed), exact LLC legal name (footer says "© Sunday Gravy Studio"), real testimonials (HTML comment placeholders on /about/ and /restaurant-photography/), Google Business Profile link for schema sameAs.
+- Copy with assumptions to confirm: he travels to the Main Line and close suburbs; usage covers menu/web/social/delivery apps/Google/press and goes in writing before the shoot; the kitchen plates and he tidies on set; shoots usually before service.
+- Off-site SEO to-dos for Joshua: SEO_OFFSITE_CHECKLIST.md.
 - Photo source: ~/Desktop/forsundaygravy (originals) and ~/Desktop/forsundaygravy/web (1800px copies).
 
 ## First session: get it live
@@ -43,9 +51,8 @@ Status Sep 29 2026: steps 0-2 done (repo joshua-albert/sundaygravy-site pushed, 
 ## Page background (decided Sep 29 2026)
 - White pages so the colorful photos carry the site. Butter #F8E7A4 is the brand accent only: footer band, favicon tile, Instagram, print.
 
-## Next up (after it's live)
-- Split the hash views into real pages (/work/, /about/, /contact/) for SEO, with titles, meta descriptions, LocalBusiness schema (no street address in schema; geo + areaServed only, same decision as Cowdog), sitemap.
-- Wire the contact form the same way the Cowdog /contact/ form is wired (it works), plus a honeypot.
-- Email: hello@sundaygravystudio.com isn't set up yet. The page flags it in red. Help him choose forwarding vs Google Workspace.
-- Google Search Console + GA4, Google Business Profile.
-- Image optimization (WebP + srcset), alt text is already written.
+## Next up
+- Plug in the GA4 ID, Instagram, GBP link and LLC name when he sends them.
+- Confirm the Formspree form delivers to joshua@cowdog.studio; if not, have him make a separate Sunday Gravy form in Formspree and swap the ID in tools/content/contact.html.
+- Email: no hello@sundaygravystudio.com yet; the form is the only contact method. Help him choose forwarding vs Google Workspace if he wants an address.
+- Work through SEO_OFFSITE_CHECKLIST.md with him.
