@@ -12,7 +12,7 @@
 
 ## Brand
 - Logo: D4.3 "Meatball Lift" (a fork lifting a meatball out of a bowl of spaghetti with two meatballs left, steam), a loose one-color red marker doodle. It's inline SVG in index.html; favicon.svg is the same mark on butter. The final logo will eventually be redrawn by hand and scanned; when he supplies a scan, swap it in.
-- Colors: tomato red #D52B1E, ink #1A1918, butter background #F8E7A4 (he specifically likes the butter background), lighter butter #FBEFC0.
+- Colors: tomato red #D52B1E, ink #1A1918, white page background, butter #F8E7A4 as accent (footer, favicon, social, print).
 - Type: Caveat Brush (marker lettering for the name), Fraunces (headlines), Inter Tight (body/UI). All from Google Fonts.
 - Layout reference: rlga.photo (minimal, big rotating homepage photo, mark with name under it).
 
@@ -37,6 +37,9 @@
    - sundaygravy.studio: 301 forward to https://www.sundaygravystudio.com (registrar forwarding is fine).
 4. After DNS resolves, turn on "Enforce HTTPS". Verify with `dig` and `curl -I`.
 5. Tell him exactly what's done and what he still has to click.
+
+## Page background (decided Sep 29 2026)
+- White pages so the colorful photos carry the site. Butter #F8E7A4 is the brand accent only: footer band, favicon tile, Instagram, print.
 
 ## Next up (after it's live)
 - Split the hash views into real pages (/work/, /about/, /contact/) for SEO, with titles, meta descriptions, LocalBusiness schema (no street address in schema; geo + areaServed only, same decision as Cowdog), sitemap.
