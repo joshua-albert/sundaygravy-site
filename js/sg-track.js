@@ -1,21 +1,9 @@
-/* Sunday Gravy Studio analytics: GA4 plus click and form tracking.
+/* Sunday Gravy Studio analytics: click and scroll tracking on top of GA4.
    Same approach as cowdog-track.js. Every event carries source_page.
-   GA stays off until GA_ID is filled in with the Sunday Gravy GA4 measurement ID. */
+   The GA4 tag itself (G-H66S7RM0XF) is in every page's <head>, like the Cowdog site.
+   generate_lead is sent from js/site.js when the contact form sends successfully. */
 (function () {
   'use strict';
-
-  var GA_ID = ''; // e.g. 'G-XXXXXXXXXX' from GA4 > Admin > Data streams
-
-  if (GA_ID) {
-    var s = document.createElement('script');
-    s.async = true;
-    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
-    document.head.appendChild(s);
-    window.dataLayer = window.dataLayer || [];
-    window.gtag = function () { window.dataLayer.push(arguments); };
-    window.gtag('js', new Date());
-    window.gtag('config', GA_ID);
-  }
 
   var page = location.pathname;
 

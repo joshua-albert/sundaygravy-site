@@ -4,7 +4,7 @@
 - Owner: Joshua Albert (GitHub: joshua-albert, git email joshuascottalbert@gmail.com). Not very technical. He directs and reviews; you build. Make reasonable calls and show results instead of asking first. Explain anything he has to do himself in plain steps.
 - Business: Sunday Gravy Studio, a food and drink photography studio in South Philadelphia, its own LLC, separate from his other business Cowdog Studio (cowdog.studio). Clients: restaurants, bars, bakeries, cafés. No product photography for now.
 - Domains he owns: sundaygravystudio.com (primary; site lives at https://www.sundaygravystudio.com) and sundaygravy.studio (should 301 redirect to the primary). Both are registered at GoDaddy (confirmed by Joshua Sep 29 2026), same as his ~30 Cowdog domains. For Cowdog he set up 301 forwarding in GoDaddy (Permanent 301, https, no masking), so use that same pattern for sundaygravy.studio.
-- Instagram handle planned: @sundaygravystudio (not yet confirmed as claimed).
+- Instagram: @sundaygravystudio (confirmed his, Sep 30 2026). Linked in the footer, on /contact/ and in schema sameAs.
 
 ## Stack (same approach as his Cowdog site at ~/cowdogwebsite/cowdog-main)
 - Static HTML/CSS/JS, no framework. GitHub Pages serves the `main` branch from the repo root. `CNAME` file = www.sundaygravystudio.com. `.nojekyll` present.
@@ -12,25 +12,27 @@
 - Photos: `tools/photos.py` (slug + alt, Work page order); `python3 tools/photos.py` makes the WebP sizes (needs Pillow).
 - The local ~/cowdogwebsite/cowdog-main checkout is behind origin/main. For current Cowdog code use `git show origin/main:<path>` there (after `git fetch`), or the live site.
 
-## Brand
-- Logo: D4.3 "Meatball Lift" (a fork lifting a meatball out of a bowl of spaghetti with two meatballs left, steam), a loose one-color red marker doodle. It's inline SVG, stored grouped (bowl / steam / lift) in tools/mark.svg and animated in site.css: the fork lifts and the steam drifts, looping on the home lockup and on hover in the header and footer, off under prefers-reduced-motion. favicon.svg is the same mark on butter. The final logo will eventually be redrawn by hand and scanned; when he supplies a scan, swap it in.
-- Colors: tomato red #D52B1E, ink #1A1918, white page background, butter #F8E7A4 as accent (footer, favicon, social, print).
-- Type: Caveat Brush (marker lettering for the name), Fraunces (headlines), Inter Tight (body/UI). All from Google Fonts.
-- Layout reference: rlga.photo (minimal, big rotating homepage photo, mark with name under it).
+## Brand (round 3 redesign, Sep 30 2026; brief and preview in design/, which is gitignored)
+- Logo: brush-pen redraw of D4.3 "Meatball Lift" (design/mark-brush.svg), one color #D52B1E. Inline on Home (tools/mark.svg, grouped still / lift) with a slow ~1.5px lift of the fork and meatball, off under prefers-reduced-motion. Footer uses /mark.svg as an <img>. favicon.svg = mark on a butter tile; icons and og-image.jpg rendered from it.
+- Colors: #fff background, #111 text, #8a8a8a secondary, #e6e6e6 hairlines, #D52B1E only in the logo, butter #F8E7A4 only for the footer bar and favicon.
+- Type: Hoss Round Slab via Adobe Fonts kit cur5uhh (<link> to use.typekit.net/cur5uhh.css in every head; kit allows sundaygravystudio.com, www, joshua-albert.github.io, localhost, so preview locally at http://localhost:8765, not 127.0.0.1). Hoss for H1s (clamp 32-64px, -0.02em, lh 1.02), the studio name under the logo (24px/500), rate names and prices (20px), subheads (20px) and body (17px, max 34em). Helvetica stack only for small UI: 11px caps, .04em (nav, footer, labels, form labels, buttons). No bold anywhere.
+- Layout: RLGA-style (rlga.photo). Fixed corner nav (Work, Rates left; About, Contact right; current page underlined). Content sits in the right-hand 9 of 12 columns with NO left-column labels (Joshua removed them Sep 30 2026); h2 subheads show as small caps inside the content column; generated Questions/More/Book sections have screen-reader-only h2s. Slim butter footer.
 
 ## Copy rules (his voice)
 - Sound spoken, not writerly. Short sentences. No cheesy lines, no forced keyword openers, no repeated setup-pivot-punchline, sparing em dashes.
 - Don't lean on his photojournalism background as a credential.
 - Verify facts before stating them. If you can't verify something, say so.
 
-## Current content (Sep 29 2026, round 2 from NEXT-BRIEF.md)
-- Real pages: / (slideshow + lockup + H1 "Food & Restaurant Photography in Philadelphia"), /work/, /restaurant-photography/, /food-photography/, /drink-photography/, /pricing/, /about/, /contact/, /blog/ (10 guides, all dated 2026-09-29, the day they were written), 404.html. Old /#work etc. links redirect via js/site.js.
-- Prices (Joshua cut them Sep 29 2026): menu shoot half day $500 (20 photos), full day $950 (45 photos), dish drop $250 (1 hr, 6 photos), monthly content $600/mo (1 visit, 10 photos). He may prefer exact thirds ($467 / $933 / $233).
-- About: Joshua photo (from Cowdog), "22 years working in restaurants" as plain fact, sister company of Cowdog Studio (linked, also in footer).
-- Contact form posts to the Cowdog Formspree form (xdeoekqz) with subject "Sunday Gravy inquiry: <name> / <business>", honeypot `_gotcha`. Delivers wherever that Formspree form sends (Joshua wants joshua@cowdog.studio). No email address shown on the site.
-- GA4: js/sg-track.js has GA_ID = '' until Joshua creates the Sunday Gravy GA4 property. Event generate_lead fires on successful form send.
-- Not yet on the site, waiting on Joshua: Instagram handle (unconfirmed), exact LLC legal name (footer says "© Sunday Gravy Studio"), real testimonials (HTML comment placeholders on /about/ and /restaurant-photography/), Google Business Profile link for schema sameAs.
-- Copy with assumptions to confirm: he travels to the Main Line and close suburbs; usage covers menu/web/social/delivery apps/Google/press and goes in writing before the shoot; the kitchen plates and he tidies on set; shoots usually before service.
+## Current content (Sep 30 2026, round 3)
+- Pages: / (slideshow of 13 photos, crossfade every 4s, left third = previous, rest = next; with Reduce Motion it still advances but swaps instantly; hidden H1 "Food & Restaurant Photography in the Philadelphia Area"), /work/ (3-col masonry, 2 on mobile, tap to open full screen, tap to close; hidden H1), /pricing/ (nav label "Rates"; H1 "Launch rates for restaurants, bars and cafés in the Philadelphia area."), /about/ (split screen, sticky B&W photo), /contact/, /restaurant-photography/, /food-photography/, /drink-photography/, /blog/ ("Journal", 10 guides dated 2026-09-29), 404.html. Old /#work, #rates etc. redirect via js/site.js.
+- Copy says "Philadelphia area" (titles, meta, copy); schema keeps address Philadelphia, PA and adds areaServed Greater Philadelphia.
+- Prices (Sep 30 2026, "launch rates"): dish drop $175 (1 hr, 6 photos), menu shoot half day $400 (20 photos), full day $750 (45 photos, dishes and the room), monthly content $300/mo (1 visit, 10 photos). Source of truth: RATES in tools/build.py; prose mentions are in the service pages and 3 guides.
+- Usage note (his words): menu, website, social, Google and delivery apps; ads and packaging quoted separately.
+- No turnaround promises anywhere (Joshua, Sep 30 2026). No email address on the site; the form is the contact method.
+- Contact form posts to the Cowdog Formspree form (xdeoekqz) with subject "Sunday Gravy inquiry: <name> / <business>", honeypot `_gotcha`. Delivers wherever that Formspree form sends (Joshua wants joshua@cowdog.studio).
+- GA4 G-H66S7RM0XF: gtag in every <head> (same pattern as Cowdog); js/sg-track.js adds click/scroll events; js/site.js fires generate_lead after a successful form send.
+- Still waiting on Joshua: exact LLC legal name (footer says "© Sunday Gravy Studio"), real testimonials (HTML comment placeholders on /about/ and /restaurant-photography/), Google Business Profile link for schema sameAs.
+- Copy with assumptions to confirm: he travels to the Main Line and close suburbs; the kitchen plates and he tidies on set; shoots usually before service.
 - Off-site SEO to-dos for Joshua: SEO_OFFSITE_CHECKLIST.md.
 - Photo source: ~/Desktop/forsundaygravy (originals) and ~/Desktop/forsundaygravy/web (1800px copies).
 
@@ -48,11 +50,9 @@ Status Sep 29 2026: first session DONE. DNS verified; HTTPS certificate issued (
 4. After DNS resolves, turn on "Enforce HTTPS". Verify with `dig` and `curl -I`.
 5. Tell him exactly what's done and what he still has to click.
 
-## Page background (decided Sep 29 2026)
-- White pages so the colorful photos carry the site. Butter #F8E7A4 is the brand accent only: footer band, favicon tile, Instagram, print.
 
 ## Next up
-- Plug in the GA4 ID, Instagram, GBP link and LLC name when he sends them.
+- Plug in the GBP link and LLC name when he sends them. In GA4, mark generate_lead as a key event.
 - Confirm the Formspree form delivers to joshua@cowdog.studio; if not, have him make a separate Sunday Gravy form in Formspree and swap the ID in tools/content/contact.html.
 - Email: no hello@sundaygravystudio.com yet; the form is the only contact method. Help him choose forwarding vs Google Workspace if he wants an address.
 - Work through SEO_OFFSITE_CHECKLIST.md with him.

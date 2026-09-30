@@ -4,22 +4,25 @@
 
 Each file in tools/content/ (and tools/content/blog/) is one page: a JSON
 header between two lines of '---', then the page body as HTML. This script
-wraps every body in the shared head, header, footer and schema, and writes
-plain HTML to the repo (e.g. /about/index.html). GitHub Pages serves those
-files as-is; nothing runs on the server. Commit the output along with the
-content.
+wraps every body in the shared head, corner nav, butter footer and schema, and
+writes plain HTML to the repo (e.g. /about/index.html). GitHub Pages serves
+those files as-is. Commit the output along with the content.
+
+Layouts ("layout" in the header):
+    rows   (default) sections in the right-hand content column, no left labels.
+           The page's "h1" opens the first section; every <h2> in the body
+           starts a new section and shows as a small caps subhead. FAQ, related
+           links and a booking line are added at the end ({{tail}}...{{/tail}}
+           does the same on plain pages). Blog posts always use this.
+    plain  body is used as written.
 
 Body shortcuts:
     {{photo:slug|sizes|class}}   responsive <img> (WebP srcset, width/height)
     {{photo!:slug|sizes|class}}  same, loaded eagerly (use for the top image)
-    {{rates}}                    the four price cards
-    {{faq}}                      FAQ list from the page's "faq" field
-    {{cta}}                      booking call-to-action block
-    {{services}}                 links to the three service pages (minus this one)
-    {{posts}}                    blog post list
-    {{grid}}                     Work page photo grid
-    {{slideshow}}                Home page slideshow (first 10 photos)
-    {{mark}}                     the logo mark (inline SVG, animated)
+    {{rates}}  rates table     {{steps}}  the three shoot steps
+    {{usage}}  usage note      {{faq}}    FAQ list from the page's "faq" field
+    {{grid}}   Work page grid  {{slideshow}} / {{sig}}  home page pieces
+    {{posts}}  journal list
 """
 import html
 import json
@@ -38,36 +41,46 @@ SITE = "https://www.sundaygravystudio.com"
 BRAND = "Sunday Gravy Studio"
 YEAR = date.today().year
 ALT = dict(PHOTOS)
-ALT["joshua-albert-philadelphia-food-photographer"] = "Black and white portrait of Joshua Albert, food photographer in Philadelphia"
+ALT["joshua-albert-philadelphia-food-photographer"] = "Black and white portrait of Joshua Albert, food photographer in the Philadelphia area"
+INSTAGRAM = "https://www.instagram.com/sundaygravystudio/"
+COWDOG = "https://www.cowdog.studio/"
+GA_ID = "G-H66S7RM0XF"
 
 RATES = [
-    # name, price, unit, photos line, detail, url anchor
-    ("Menu shoot, half day", 500, "", "20 finished photos", "A new menu, or the dishes that sell the most.", "menu-shoot-half-day"),
-    ("Menu shoot, full day", 950, "", "45 finished photos", "The whole menu, the room, the bar and the team.", "menu-shoot-full-day"),
-    ("Dish drop", 250, "", "1 hour, 6 photos", "New specials and one-offs.", "dish-drop"),
-    ("Monthly content", 600, "/mo", "1 visit a month, 10 photos", "Fresh photos for social, every month.", "monthly-content"),
+    # name, price, unit, detail, anchor
+    ("Dish drop", 175, "", "1 hour · 6 photos", "dish-drop"),
+    ("Menu shoot, half day", 400, "", "20 photos", "menu-shoot-half-day"),
+    ("Menu shoot, full day", 750, "", "45 photos, dishes and the room", "menu-shoot-full-day"),
+    ("Monthly content", 300, "/mo", "1 visit · 10 photos", "monthly-content"),
+]
+USAGE = "Use the photos on your menu, website, social, Google and the delivery apps. Ads and packaging are quoted separately."
+STEPS = [
+    "Send me the menu. We pick the dishes and a time that works for the kitchen.",
+    "I set up in a corner of the dining room. The kitchen fires one plate at a time. If something needs another try, we fire it again.",
+    "I edit everything and send it sized for your menu, website, Instagram and the delivery apps.",
 ]
 
 SERVICES = [
-    ("/restaurant-photography/", "Restaurant photography", "Menu shoots, openings, dish drops and monthly content."),
-    ("/food-photography/", "Food photography", "For restaurants, bakeries and cafés. Menus, websites, delivery apps."),
-    ("/drink-photography/", "Cocktail and drink photography", "Cocktail lists, pours, coffee and the bar itself."),
-]
-
-NAV = [("/work/", "Work"), ("/pricing/", "Pricing"), ("/about/", "About"), ("/contact/", "Book")]
-
-FOOT_NAV = [
-    ("/work/", "Work"),
     ("/restaurant-photography/", "Restaurant photography"),
     ("/food-photography/", "Food photography"),
-    ("/drink-photography/", "Cocktail and drink photography"),
-    ("/pricing/", "Pricing"),
-    ("/blog/", "Guides"),
-    ("/about/", "About"),
-    ("/contact/", "Book a shoot"),
+    ("/drink-photography/", "Drink photography"),
+    ("/pricing/", "Rates"),
+    ("/work/", "Work"),
+    ("/blog/", "Journal"),
 ]
 
+NAV_L = [("/work/", "Work"), ("/pricing/", "Rates")]
+NAV_R = [("/about/", "About"), ("/contact/", "Contact")]
+FOOT_L = [("/restaurant-photography/", "Restaurant photography"), ("/food-photography/", "Food photography"),
+          ("/drink-photography/", "Drink photography"), ("/blog/", "Journal")]
+
 MARK = (TOOLS / "mark.svg").read_text().strip()
+MARK_VB = (TOOLS / "mark-viewbox.txt").read_text().strip()
+_vb = [float(x) for x in MARK_VB.split()]
+MARK_RATIO = _vb[3] / _vb[2]
+
+# Home slideshow order (1-based positions in PHOTOS), from the design preview.
+HERO = [5, 7, 3, 8, 1, 13, 9, 18, 2, 4, 12, 10, 20]
 
 
 # ---------- images ----------
@@ -93,28 +106,37 @@ def srcset(slug):
     return ", ".join(f"/photos/{slug}-{w}.webp {w}w" for w in ws), ws
 
 
+def mid(ws):
+    return [x for x in ws if x <= 1200][-1]
+
+
 def photo(slug, sizes="100vw", cls="", eager=False, alt=None, lazy=True):
     w, h = jpeg_size(ROOT / "photos" / f"{slug}.jpg")
     ss, ws = srcset(slug)
-    mid = [x for x in ws if x <= 1200][-1]
     alt = ALT[slug] if alt is None else alt
     load = 'fetchpriority="high"' if eager else ('loading="lazy" decoding="async"' if lazy else 'decoding="async"')
     c = f' class="{cls}"' if cls else ""
-    return (f'<img{c} src="/photos/{slug}-{mid}.webp" srcset="{ss}" sizes="{sizes}" '
+    return (f'<img{c} src="/photos/{slug}-{mid(ws)}.webp" srcset="{ss}" sizes="{sizes}" '
             f'width="{w}" height="{h}" alt="{html.escape(alt)}" {load}>')
 
 
 def preload(slug, sizes):
     ss, ws = srcset(slug)
-    mid = [x for x in ws if x <= 1200][-1]
-    return (f'<link rel="preload" as="image" href="/photos/{slug}-{mid}.webp" '
+    return (f'<link rel="preload" as="image" href="/photos/{slug}-{mid(ws)}.webp" '
             f'imagesrcset="{ss}" imagesizes="{sizes}" fetchpriority="high">')
 
 
 # ---------- blocks ----------
 
-def mark(cls=""):
-    return f'<svg class="mark {cls}" viewBox="0 0 240 240" aria-hidden="true" focusable="false">{MARK}</svg>'
+BODY_SIZES = "(max-width: 760px) calc(100vw - 40px), 72vw"
+
+
+def mark_inline(cls=""):
+    return f'<svg class="mark {cls}" viewBox="{MARK_VB}" aria-hidden="true" focusable="false">{MARK}</svg>'
+
+
+def mark_img(width):
+    return f'<img src="/mark.svg" width="{width}" height="{round(width * MARK_RATIO)}" alt="">'
 
 
 def money(n):
@@ -122,63 +144,66 @@ def money(n):
 
 
 def rates_html():
-    cards = "".join(
-        f'<div class="rate" id="{a}"><h3>{html.escape(n)}</h3>'
-        f'<div class="p">{money(p)}<small>{u}</small></div><p class="ph">{ph}</p><p>{d}</p></div>'
-        for n, p, u, ph, d, a in RATES)
-    return f'<div class="rates">{cards}</div>'
+    rows = "".join(
+        f'<tr id="{a}"><td class="n mute u">{i + 1:02d}</td><td>{html.escape(n)}<span class="dm mute u">{d}</span></td>'
+        f'<td class="d mute u">{d}</td><td>{money(p)}{u}</td></tr>'
+        for i, (n, p, u, d, a) in enumerate(RATES))
+    return f'<table class="rates"><caption class="sr">Rates</caption>{rows}</table>'
+
+
+def steps_html():
+    return '<ol class="steps">' + "".join(f"<li>{s}</li>" for s in STEPS) + "</ol>"
 
 
 def faq_html(faq):
     items = "".join(f'<details><summary>{html.escape(q)}</summary><div>{a}</div></details>' for q, a in faq)
-    return f'<section class="faq" aria-labelledby="faq-h"><h2 id="faq-h">Questions people ask</h2>{items}</section>'
+    return f'<div class="faq">{items}</div>'
 
 
-def cta_html():
-    return ('<section class="cta"><h2>Have a menu, a menu change or an opening coming up?</h2>'
-            '<p>Tell me what you&rsquo;re working on and when. Prices are on the <a href="/pricing/">pricing page</a>.</p>'
-            '<a class="btn" href="/contact/">Book a shoot</a></section>')
-
-
-def services_html(path):
-    items = "".join(
-        f'<a class="svc" href="{u}"><span class="svc-t">{t}</span><span class="svc-d">{d}</span></a>'
-        for u, t, d in SERVICES if u != path)
-    return f'<nav class="svcs" aria-label="Services">{items}</nav>'
+def links_html(path, extra=()):
+    items = "".join(f'<li><a href="{u}"><span>{t}</span><span class="mute">&rarr;</span></a></li>'
+                    for u, t in list(extra) + SERVICES if u != path)
+    return f'<ul class="links u">{items}</ul>'
 
 
 def grid_html():
-    tiles = []
+    out = []
     for i, (slug, alt) in enumerate(PHOTOS):
-        tiles.append(
-            f'<button class="tile" type="button" data-i="{i}" data-full="/photos/{slug}-1800.webp" '
-            f'aria-label="Open photo: {html.escape(alt)}">'
-            + photo(slug, "(max-width: 760px) 50vw, 400px", eager=i < 3, lazy=i >= 12) + "</button>")
-    return f'<div class="grid" id="grid">{"".join(tiles)}</div>'
+        out.append(f'<a href="/photos/{slug}-1800.webp" data-i="{i}">'
+                   + photo(slug, "(max-width: 760px) 50vw, 33vw", eager=i < 3, lazy=i >= 9) + "</a>")
+    return f'<div class="wgrid" id="wgrid">{"".join(out)}</div>'
 
 
-SHOW_SIZES = "(max-width: 900px) 100vw, 900px"
+SHOW_SIZES = "(max-width: 1140px) 100vw, 1100px"
 
 
 def slideshow_html():
     imgs = []
-    for i, (slug, alt) in enumerate(PHOTOS[:10]):
+    for i, n in enumerate(HERO):
+        slug, alt = PHOTOS[n - 1]
         if i == 0:
             imgs.append(photo(slug, SHOW_SIZES, "on", eager=True))
             continue
-        ss, _ = srcset(slug)
+        ss, ws = srcset(slug)
         w, h = jpeg_size(ROOT / "photos" / f"{slug}.jpg")
-        imgs.append(f'<img data-src="/photos/{slug}-1200.webp" data-srcset="{ss}" sizes="{SHOW_SIZES}" '
+        imgs.append(f'<img data-src="/photos/{slug}-{mid(ws)}.webp" data-srcset="{ss}" sizes="{SHOW_SIZES}" '
                     f'width="{w}" height="{h}" alt="{html.escape(alt)}" decoding="async">')
-    return (f'<button class="show" id="show" type="button" aria-label="Next photo">{"".join(imgs)}</button>')
+    return (f'<div class="stage" id="stage" role="button" tabindex="0" '
+            f'aria-label="Recent work. Click for the next photo.">{"".join(imgs)}</div>')
+
+
+def sig_html():
+    return (f'<a class="sig" href="/work/" aria-label="{BRAND}, see the work">{mark_inline()}'
+            f'<span class="nm">{BRAND}</span>'
+            '<span class="u tag">Food and drink photography · Philadelphia area</span></a>')
 
 
 def posts_html(posts):
     items = "".join(
-        f'<li><a href="{p["path"]}"><span class="pt">{html.escape(p["h1"])}</span></a>'
-        f'<p>{html.escape(p["excerpt"])}</p></li>'
+        f'<li><a href="{p["path"]}"><span>{html.escape(p["h1"])}</span>'
+        f'<span class="mute u">{date.fromisoformat(p["date"]):%b %Y}</span></a></li>'
         for p in posts)
-    return f'<ul class="posts">{items}</ul>'
+    return f'<ul class="links one">{items}</ul>'
 
 
 # ---------- schema ----------
@@ -192,17 +217,19 @@ def business():
         "@type": ["LocalBusiness", "ProfessionalService"],
         "@id": BUSINESS_ID,
         "name": BRAND,
-        "description": "Food and drink photography for restaurants, bars, bakeries and cafés in Philadelphia. Menu shoots, dish drops and monthly content.",
+        "description": "Food and drink photography for restaurants, bars, bakeries and cafés in the Philadelphia area. Menu shoots, dish drops and monthly content.",
         "url": SITE + "/",
         "logo": SITE + "/icon-512.png",
         "image": SITE + "/og-image.jpg",
-        "priceRange": "$250 - $950",
+        "priceRange": "$175 - $750",
         "address": {"@type": "PostalAddress", "addressLocality": "Philadelphia", "addressRegion": "PA", "addressCountry": "US"},
         "geo": {"@type": "GeoCoordinates", "latitude": 39.9259, "longitude": -75.1662},
-        "areaServed": [{"@type": "City", "name": "Philadelphia"}] + [
+        "areaServed": [{"@type": "City", "name": "Philadelphia"},
+                       {"@type": "AdministrativeArea", "name": "Greater Philadelphia"}] + [
             {"@type": "Place", "name": f"{n}, Philadelphia"} for n in
             ("South Philadelphia", "East Passyunk", "Fishtown", "Center City", "Old City", "Northern Liberties")
         ] + [{"@type": "Place", "name": "Main Line, Pennsylvania"}],
+        "sameAs": [INSTAGRAM],
         "founder": {"@id": PERSON_ID},
         "knowsAbout": ["Food photography", "Restaurant photography", "Menu photography", "Cocktail photography", "Drink photography", "Bakery photography"],
         "hasOfferCatalog": {
@@ -211,7 +238,7 @@ def business():
             "itemListElement": [
                 {"@type": "Offer", "name": n, "price": str(p), "priceCurrency": "USD", "url": f"{SITE}/pricing/#{a}",
                  "itemOffered": {"@id": f"{SITE}/pricing/#{a}-service"}}
-                for n, p, u, ph, d, a in RATES],
+                for n, p, u, d, a in RATES],
         },
     }
 
@@ -225,25 +252,21 @@ def person():
         "url": SITE + "/about/",
         "image": SITE + "/photos/joshua-albert-philadelphia-food-photographer.jpg",
         "worksFor": [{"@id": BUSINESS_ID},
-                     {"@type": "Organization", "name": "Cowdog Studio", "url": "https://www.cowdog.studio/"}],
+                     {"@type": "Organization", "name": "Cowdog Studio", "url": COWDOG}],
     }
 
 
 def service_nodes():
-    out = []
-    for n, p, u, ph, d, a in RATES:
-        out.append({
-            "@type": "Service",
-            "@id": f"{SITE}/pricing/#{a}-service",
-            "name": n,
-            "serviceType": "Food photography",
-            "description": f"{ph}. {d}",
-            "provider": {"@id": BUSINESS_ID},
-            "areaServed": {"@type": "City", "name": "Philadelphia"},
-            "offers": {"@type": "Offer", "price": str(p), "priceCurrency": "USD",
-                       "url": f"{SITE}/pricing/#{a}"},
-        })
-    return out
+    return [{
+        "@type": "Service",
+        "@id": f"{SITE}/pricing/#{a}-service",
+        "name": n,
+        "serviceType": "Food photography",
+        "description": d.replace(" · ", ", ") + ".",
+        "provider": {"@id": BUSINESS_ID},
+        "areaServed": {"@type": "AdministrativeArea", "name": "Greater Philadelphia"},
+        "offers": {"@type": "Offer", "price": str(p), "priceCurrency": "USD", "url": f"{SITE}/pricing/#{a}"},
+    } for n, p, u, d, a in RATES]
 
 
 def strip_tags(s):
@@ -266,10 +289,11 @@ def schema(page, crumbs):
             for q, a in page["faq"]]})
     if page.get("service"):
         s = page["service"]
+        prices = [p for _, p, _, _, _ in RATES]
         graph.append({"@type": "Service", "@id": url + "#service", "name": s["name"], "serviceType": s["type"],
                       "description": s["description"], "provider": {"@id": BUSINESS_ID}, "url": url,
-                      "areaServed": {"@type": "City", "name": "Philadelphia"},
-                      "offers": {"@type": "AggregateOffer", "lowPrice": "250", "highPrice": "950", "priceCurrency": "USD"}})
+                      "areaServed": {"@type": "AdministrativeArea", "name": "Greater Philadelphia"},
+                      "offers": {"@type": "AggregateOffer", "lowPrice": str(min(prices)), "highPrice": str(max(prices)), "priceCurrency": "USD"}})
     if page["path"] == "/pricing/":
         graph += service_nodes()
     if page.get("type") == "post":
@@ -287,35 +311,22 @@ CSS = (TOOLS / "site.css").read_text()
 CSS = re.sub(r"/\*.*?\*/", "", CSS, flags=re.S)
 CSS = re.sub(r"\s*\n\s*", "", CSS)
 
-FONTS = "https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Inter+Tight:wght@400;500;600&display=swap"
 
-FILTER = ('<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><filter id="marker" x="-5%" y="-5%" '
-          'width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="1" seed="4"/>'
-          '<feDisplacementMap in="SourceGraphic" scale="1.8"/></filter></defs></svg>')
-
-
-def header(path):
-    links = "".join(
-        f'<a href="{u}"{" aria-current=\"page\"" if path.startswith(u) else ""}>{t}</a>' for u, t in NAV)
-    mini = "" if path == "/" else (
-        f'<a class="mini" href="/" aria-label="{BRAND}, home">{mark()}<span class="nm">{BRAND}</span></a>')
-    return f'<header class="top">{mini}<nav class="nav" aria-label="Main">{links}</nav></header>'
+def nav(path):
+    def a(u, t):
+        cur = ' class="cur" aria-current="page"' if path.startswith(u) else ""
+        return f'<a href="{u}"{cur}>{t}</a>'
+    return (f'<nav class="nav u" aria-label="Main"><span class="g">{"".join(a(u, t) for u, t in NAV_L)}</span>'
+            f'<span class="g">{"".join(a(u, t) for u, t in NAV_R)}</span></nav>')
 
 
 def footer():
-    nav = "".join(f'<a href="{u}">{t}</a>' for u, t in FOOT_NAV)
-    return (
-        '<footer class="foot"><div class="foot-in">'
-        f'<div class="foot-brand"><a class="foot-logo" href="/" aria-label="{BRAND}, home">{mark()}'
-        f'<span class="nm">{BRAND}</span></a>'
-        '<p>Food and drink photography in Philadelphia.</p>'
-        '<p>Restaurants, bars, bakeries and cafés. Based in South Philly.</p></div>'
-        f'<nav class="foot-nav" aria-label="Footer">{nav}</nav>'
-        '<div class="foot-more">'
-        '<p>A sister company of <a href="https://www.cowdog.studio/">Cowdog Studio</a>, family and engagement portraits in Philadelphia.</p>'
-        '<p><a class="btn btn-sm" href="/contact/">Book a shoot</a></p>'
-        '</div></div>'
-        f'<div class="foot-legal">&copy; {YEAR} {BRAND}</div></footer>')
+    fl = "".join(f'<a href="{u}">{t}</a>' for u, t in FOOT_L)
+    return (f'<footer class="foot u"><a class="fm" href="/" aria-label="{BRAND}, home">{mark_img(26)}'
+            f'<span>&copy; {YEAR} {BRAND}</span></a>'
+            f'<nav class="fl" aria-label="Services">{fl}</nav>'
+            f'<span class="fr"><a href="{COWDOG}">Sister studio of Cowdog Studio</a>'
+            f'<a href="{INSTAGRAM}">Instagram</a></span></footer>')
 
 
 def render(page, body, crumbs):
@@ -353,19 +364,19 @@ def render(page, body, crumbs):
 <meta property="og:image:height" content="{ogh}">
 <meta name="twitter:card" content="summary_large_image">
 {pre}
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="{FONTS}" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="{FONTS}"></noscript>
+<link rel="preconnect" href="https://use.typekit.net" crossorigin>
+<link rel="preconnect" href="https://p.typekit.net" crossorigin>
+<link rel="stylesheet" href="https://use.typekit.net/cur5uhh.css">
 <style>{CSS}</style>
 <script type="application/ld+json">{schema(page, crumbs)}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id={GA_ID}"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments);}}gtag('js',new Date());gtag('config','{GA_ID}');</script>
 <script defer src="/js/sg-track.js"></script>
 <script defer src="/js/site.js"></script>
 </head>
 <body class="pg-{page.get('slug', 'page')}">
-{FILTER}
 <a class="skip" href="#main">Skip to content</a>
-{header(path)}
+{nav(path)}
 <main id="main">
 {body}
 </main>
@@ -373,6 +384,40 @@ def render(page, body, crumbs):
 </body>
 </html>
 """
+
+
+# ---------- rows layout ----------
+
+def rows(page, body):
+    """First section: H1 + intro. Each <h2> starts a new section with the h2 as a small caps subhead."""
+    parts = re.split(r"<h2>(.*?)</h2>", body.strip(), flags=re.S)
+    intro, rest = parts[0], parts[1:]
+    top = ""
+    if page.get("type") == "post":
+        d = date.fromisoformat(page["date"])
+        top = (f'<p class="kicker u mute"><a href="/blog/">Journal</a> · '
+               f'<time datetime="{page["date"]}">{d:%B} {d.day}, {d.year}</time></p>')
+    top += f'<h1 class="lede">{html.escape(page["h1"])}</h1>'
+    if page.get("type") == "post":
+        top += f'<figure>{photo(page["image"], BODY_SIZES, eager=True)}</figure>'
+    out = [f'<section class="row"><div class="body">{top}{intro}</div></section>']
+    for i in range(0, len(rest), 2):
+        out.append(f'<section class="row"><div class="body"><h2 class="sh u">{rest[i]}</h2>{rest[i + 1].strip()}</div></section>')
+    out += tail_rows(page)
+    return f'<div class="page">{"".join(out)}</div>'
+
+
+def tail_rows(page, more=None):
+    """FAQ, related links and the booking line. No visible labels; the h2s are for screen readers."""
+    out = []
+    if page.get("faq"):
+        out.append(f'<section class="row" id="faq"><div class="body"><h2 class="sr">Questions</h2>{faq_html(page["faq"])}</div></section>')
+    if not page.get("no_more"):
+        out.append(f'<section class="row"><div class="body"><h2 class="sr">More</h2>{more or links_html(page["path"])}</div></section>')
+        out.append('<section class="row"><div class="body"><h2 class="sr">Book</h2>'
+                   '<p>Tell me what you&rsquo;re working on and when.</p>'
+                   '<p class="u"><a href="/contact/">Book a shoot</a></p></div></section>')
+    return out
 
 
 # ---------- build ----------
@@ -394,31 +439,23 @@ def expand(page, posts):
     def ph(m):
         eager = m.group(1) == "!"
         parts = m.group(2).split("|")
-        return photo(parts[0], parts[1] if len(parts) > 1 and parts[1] else "100vw",
+        return photo(parts[0], parts[1] if len(parts) > 1 and parts[1] else BODY_SIZES,
                      parts[2] if len(parts) > 2 else "", eager)
     body = re.sub(r"\{\{photo(!?):([^}]+)\}\}", ph, body)
-    body = body.replace("{{rates}}", rates_html())
+    for k, v in {"rates": rates_html, "steps": steps_html, "grid": grid_html,
+                 "slideshow": slideshow_html, "sig": sig_html}.items():
+        if "{{" + k + "}}" in body:
+            body = body.replace("{{" + k + "}}", v())
+    body = body.replace("{{usage}}", USAGE)
     body = body.replace("{{faq}}", faq_html(page.get("faq", [])))
-    body = body.replace("{{cta}}", cta_html())
-    body = body.replace("{{services}}", services_html(page["path"]))
     body = body.replace("{{posts}}", posts_html(posts))
-    body = body.replace("{{grid}}", grid_html())
-    body = body.replace("{{slideshow}}", slideshow_html())
-    body = body.replace("{{mark}}", mark("big"))
+    if "{{tail}}" in body:
+        m = re.search(r"\{\{tail\}\}(.*?)\{\{/tail\}\}", body, re.S)
+        body = body.replace(m.group(0), "".join(tail_rows(page, m.group(1).strip())))
     left = re.findall(r"\{\{[^}]*\}\}", body)
     if left:
         raise SystemExit(f"{page['src']}: unknown shortcut {left}")
     return body
-
-
-def wrap_post(page, body):
-    d = date.fromisoformat(page["date"])
-    return (f'<article class="post"><header class="post-h"><p class="kicker"><a href="/blog/">Guides</a> · '
-            f'<time datetime="{page["date"]}">{d:%B} {d.day}, {d.year}</time></p>'
-            f'<h1>{html.escape(page["h1"])}</h1></header>'
-            f'<figure class="post-img">{photo(page["image"], "(max-width: 900px) 100vw, 860px", eager=True)}</figure>'
-            f'<div class="prose">{body}</div></article>{cta_html()}'
-            f'<section class="more"><h2>What I shoot</h2>{services_html("")}</section>')
 
 
 def main():
@@ -428,7 +465,7 @@ def main():
     for p in posts:
         p["type"] = "post"
         p["path"] = f"/blog/{p['src'].stem}/"
-        p["preload"] = [p["image"], "(max-width: 900px) 100vw, 860px"]
+        p["preload"] = [p["image"], BODY_SIZES]
     posts.sort(key=lambda p: (p["date"], p.get("order", 0)), reverse=True)
 
     problems = []
@@ -438,17 +475,20 @@ def main():
         if len(d) > 160:
             problems.append(f"{page['path']}: description is {len(d)} chars")
         body = expand(page, posts)
+        if page.get("type") == "post" or page.get("layout", "rows") == "rows":
+            body = rows(page, body)
         crumbs = [("Home", "/")]
         if page.get("type") == "post":
-            crumbs.append(("Guides", "/blog/"))
+            crumbs.append(("Journal", "/blog/"))
         if page["path"] != "/":
             crumbs.append((page.get("crumb", page.get("h1", page["title"])), page["path"]))
-        if page.get("type") == "post":
-            body = wrap_post(page, body)
         out = render(page, body, crumbs)
-        dest = ROOT / ("404.html" if page["path"] == "/404.html" else page["path"].strip("/") + "/index.html")
         if page["path"] == "/":
             dest = ROOT / "index.html"
+        elif page["path"] == "/404.html":
+            dest = ROOT / "404.html"
+        else:
+            dest = ROOT / page["path"].strip("/") / "index.html"
         dest.parent.mkdir(parents=True, exist_ok=True)
         dest.write_text(out)
         if not page.get("noindex"):

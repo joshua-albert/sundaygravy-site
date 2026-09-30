@@ -2,51 +2,26 @@
 {
   "path": "/contact/",
   "slug": "contact",
-  "title": "Book a Food Photography Shoot in Philadelphia",
-  "crumb": "Book a shoot",
-  "description": "Book a menu shoot, dish drop or monthly content with Sunday Gravy Studio, a food and drink photographer in Philadelphia. Tell me what you need."
+  "layout": "plain",
+  "title": "Book a Food Photography Shoot, Philadelphia Area",
+  "crumb": "Contact",
+  "description": "Book a menu shoot, dish drop or monthly content with Sunday Gravy Studio, a food and drink photographer in the Philadelphia area."
 }
 ---
-<div class="head">
-  <h1>Book a shoot</h1>
-  <p>Tell me what you're working on and when. I'll get back to you.</p>
-</div>
-<form id="inquiry" action="https://formspree.io/f/xdeoekqz" method="POST" novalidate>
-  <input type="hidden" name="_subject" value="Sunday Gravy inquiry">
-  <input type="hidden" name="source" value="sundaygravystudio.com contact page">
-  <div class="hp" aria-hidden="true"><label for="f-gotcha">Leave this empty</label><input id="f-gotcha" type="text" name="_gotcha" tabindex="-1" autocomplete="off"></div>
-  <label class="sr" for="f-name">Your name</label>
-  <input id="f-name" name="name" placeholder="Your name" autocomplete="name" required>
-  <label class="sr" for="f-biz">Restaurant, bar, bakery or café</label>
-  <input id="f-biz" name="business" placeholder="Restaurant, bar, bakery or café" autocomplete="organization">
-  <label class="sr" for="f-email">Email</label>
-  <input id="f-email" name="email" type="email" placeholder="Email" autocomplete="email" required>
-  <label class="sr" for="f-phone">Phone (optional)</label>
-  <input id="f-phone" name="phone" type="tel" placeholder="Phone (optional)" autocomplete="tel">
-  <label class="sr" for="f-type">What do you need</label>
-  <select id="f-type" name="shoot_type" required>
-    <option value="" disabled selected>What do you need</option>
-    <option>Menu shoot, half day ($500)</option>
-    <option>Menu shoot, full day ($950)</option>
-    <option>Dish drop ($250)</option>
-    <option>Monthly content ($600/mo)</option>
-    <option>New opening</option>
-    <option>Not sure yet</option>
-  </select>
-  <label class="sr" for="f-date">Date you're hoping for</label>
-  <input id="f-date" name="date" placeholder="Date you're hoping for">
-  <label class="sr" for="f-notes">Anything else</label>
-  <textarea id="f-notes" name="message" placeholder="What's on the menu, how many dishes, anything else I should know"></textarea>
-  <button class="btn" type="submit">Send</button>
-  <p class="note" id="f-note" aria-live="polite"></p>
-</form>
-<p class="sent" id="f-sent" hidden>Got it. Thanks. I'll be in touch.</p>
-<p class="small-rates">Menu shoots from $500 · Dish drop $250 · Monthly content $600/mo · <a href="/pricing/">Full pricing</a></p>
-<section class="more">
-  <h2>Not ready yet? Read up first</h2>
-  <nav class="svcs" aria-label="Guides">
-    <a class="svc" href="/blog/menu-shoot-prep-checklist/"><span class="svc-t">What to prep before a menu shoot</span><span class="svc-d">A checklist for your kitchen.</span></a>
-    <a class="svc" href="/blog/how-much-does-restaurant-photography-cost-philadelphia/"><span class="svc-t">What restaurant photography costs</span><span class="svc-d">Prices and what drives them.</span></a>
-    <a class="svc" href="/restaurant-photography/"><span class="svc-t">How a shoot day works</span><span class="svc-d">Before, during and after.</span></a>
-  </nav>
+<section class="contact">
+  <form id="inquiry" action="https://formspree.io/f/xdeoekqz" method="POST" novalidate>
+    <h1 class="sr">Book a shoot</h1>
+    <p class="intro">Tell me what you're working on and when.</p>
+    <input type="hidden" name="_subject" value="Sunday Gravy inquiry">
+    <input type="hidden" name="source" value="sundaygravystudio.com contact page">
+    <div class="hp" aria-hidden="true"><label for="f-gotcha">Leave this empty</label><input id="f-gotcha" type="text" name="_gotcha" tabindex="-1" autocomplete="off"></div>
+    <label class="f"><span class="u">Name</span><input name="name" autocomplete="name" required></label>
+    <label class="f"><span class="u">Restaurant, bar or café</span><input name="business" autocomplete="organization"></label>
+    <label class="f"><span class="u">Email</span><input name="email" type="email" autocomplete="email" required></label>
+    <label class="f"><span class="u">What are you shooting?</span><textarea name="message"></textarea></label>
+    <button class="send u" type="submit">Send</button>
+    <p class="note u mute" id="f-note" aria-live="polite"></p>
+    <p class="note u mute"><a href="https://www.instagram.com/sundaygravystudio/">@sundaygravystudio</a></p>
+  </form>
+  <p class="sent" id="f-sent" hidden>Got it. Thanks. I'll be in touch.</p>
 </section>
