@@ -135,8 +135,10 @@ def mark_inline(cls=""):
     return f'<svg class="mark {cls}" viewBox="{MARK_VB}" aria-hidden="true" focusable="false">{MARK}</svg>'
 
 
-def mark_img(width):
-    return f'<img src="/mark.svg" width="{width}" height="{round(width * MARK_RATIO)}" alt="">'
+def mark_img(width=None, height=None):
+    if height:
+        width = round(height / MARK_RATIO)
+    return f'<img src="/mark.svg" width="{width}" height="{height or round(width * MARK_RATIO)}" alt="">'
 
 
 def money(n):
@@ -316,13 +318,15 @@ def nav(path):
     def a(u, t):
         cur = ' class="cur" aria-current="page"' if path.startswith(u) else ""
         return f'<a href="{u}"{cur}>{t}</a>'
+    # Every page but Home gets the small logo top-center as the way home.
+    home = "" if path == "/" else f'<a class="home" href="/" aria-label="{BRAND} home">{mark_img(height=26)}</a>'
     return (f'<nav class="nav u" aria-label="Main"><span class="g">{"".join(a(u, t) for u, t in NAV_L)}</span>'
-            f'<span class="g">{"".join(a(u, t) for u, t in NAV_R)}</span></nav>')
+            f'{home}<span class="g">{"".join(a(u, t) for u, t in NAV_R)}</span></nav>')
 
 
 def footer():
     fl = "".join(f'<a href="{u}">{t}</a>' for u, t in FOOT_L)
-    return (f'<footer class="foot u"><a class="fm" href="/" aria-label="{BRAND}, home">{mark_img(26)}'
+    return (f'<footer class="foot u"><a class="fm" href="/" aria-label="{BRAND} home">{mark_img(26)}'
             f'<span>&copy; {YEAR} {BRAND}</span></a>'
             f'<nav class="fl" aria-label="Services">{fl}</nav>'
             f'<span class="fr"><a href="{COWDOG}">Sister studio of Cowdog Studio</a>'

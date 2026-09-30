@@ -23,6 +23,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 .nav{position:fixed;inset:0 0 auto 0;display:flex;justify-content:space-between;padding:18px 20px;z-index:10;pointer-events:none}
 .nav .g{display:flex;gap:18px}
 .nav a{pointer-events:auto}
+.nav .home{position:absolute;left:50%;top:13px;transform:translateX(-50%);display:block;line-height:0}
+.nav .home img{height:26px;width:auto;display:block}
 .nav a:hover,.nav a.cur,.foot a:hover,.links a:hover{text-decoration:underline;text-underline-offset:3px}
 
 /* logo mark: slow 1-2px lift of the fork and meatball, home only */
